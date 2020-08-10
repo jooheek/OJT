@@ -33,12 +33,28 @@ public class BoardVO {
 	private String endDate;
 	private String projectManager;
 	private String projectContractor;
+	private String projectArea;
+	private String teamName;
 	private int expence;
 	private int outsourcingCost;
 	private int netSales;
 	private int sales;
 	private int goods;
 	
+	
+	
+	public String getProjectArea() {
+		return projectArea;
+	}
+	public void setProjectArea(String projectArea) {
+		this.projectArea = projectArea;
+	}
+	public String getTeamName() {
+		return teamName;
+	}
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
 	public int getProjectCode() {
 		return projectCode;
 	}

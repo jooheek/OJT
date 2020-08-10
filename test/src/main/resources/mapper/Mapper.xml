@@ -9,6 +9,12 @@
 		ON A.projectCode = B.projectCode
 	
 	</select>
+	
+	<select id="projectId" resultType="java.util.Map">
+		SELECT *
+		from project A, finance B
+		WHERE A.projectCode = B.projectCode AND A.projectCode= #{projectCode}
+	</select>
 
 
 </mapper>

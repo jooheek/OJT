@@ -17,5 +17,7 @@ public interface BoardService {
 	
 	
 	public List<Map<String,Object>> getList(Map<String,Object>map);
+	
+
 
 }

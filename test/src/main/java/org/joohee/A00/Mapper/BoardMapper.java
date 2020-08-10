@@ -17,5 +17,7 @@ public interface BoardMapper {
 	
 	
 	public List<Map<String,Object>> getList(Map<String, Object> map);
+	
+	public List<Map<String,Object>> projectId(Map<String, Object> map);
 
 }
