@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.joohee.A00.Mapper.BoardMapper;
+import org.joohee.A00.VO.BoardVO;
 import org.joohee.A00.controller.HomeController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,11 +46,25 @@ public class BoardServiceImpl implements BoardService{
 	public List<Map<String, Object>> getList(Map<String, Object> map) {
 		List<Map<String, Object>> list = boardMapper.getList(map);
 		
-		for(int i=0;i<list.size();i++) {
-			logger.info("i :"+list.get(i));
-		}
-		
 		return list;
 	}
+
+	@Override
+	public void insert(BoardVO vo) {
+		
+	}
+
+	@Override
+	public BoardVO read(int projectCode) {
+		return boardMapper.read(projectCode);
+	}
+
+	@Override
+	public boolean delete(int projectCode) {
+
+		return boardMapper.delete(projectCode) ==1;
+	}
+
+
 
 }

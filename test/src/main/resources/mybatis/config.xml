@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 <configuration>
 	<typeAliases>
-		<typeAlias alias ="Mapper" type="org.joohee.A00.Mapper.BoardMapper" ></typeAlias>
+		<typeAlias alias ="BoardVO" type="org.joohee.A00.VO.BoardVO" ></typeAlias>
 	</typeAliases>
 
 </configuration>

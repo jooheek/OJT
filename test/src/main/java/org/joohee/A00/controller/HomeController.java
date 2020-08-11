@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.joohee.A00.Service.BoardService;
 import org.joohee.A00.VO.BoardVO;
@@ -13,8 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Handles requests for the application home page.
@@ -36,18 +38,48 @@ public class HomeController {
 	public String list( Model model) throws Exception{
 
 		Map<String,Object>map = new HashMap<String,Object>();
-		List<?>list = boardService.getList(map);
+		List<Map<String,Object>>list = boardService.getList(map);
 		
 		model.addAttribute("getList",list);
 		
 		return "home";
 	}
 	
-	
-	@RequestMapping(value="/board/insertView",method =RequestMethod.GET)
-	public String write(BoardVO vo)throws Exception {
-		
+	/*
+	 * @RequestMapping(value="/board/insert",method =RequestMethod.GET) public
+	 * String insert(@ModelAttribute BoardVO vo)throws Exception {
+	 * boardService.insert(vo);
+	 * 
+	 * return "redirect:/";
+	 * 
+	 * }
+	 */
+	@RequestMapping(value="/board/insertView",method = RequestMethod.GET)
+	public String insertView(@ModelAttribute BoardVO vo)throws Exception{
 		return "insertView";
+	}
+	
+	@RequestMapping(value="/get",method=RequestMethod.GET)
+	public String read(@RequestParam("projectCode")int projectCode,Model model )throws Exception {
+		
+		model.addAttribute("board",boardService.read(projectCode));
+		
+		return "view";
+		
+	}
+	
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public String update()throws Exception{
+		return null;
+		
+	}
+	@RequestMapping(value="/delete",method=RequestMethod.GET)
+	public String delete(@RequestParam("projectCode")int projectCode,RedirectAttributes rttr)throws Exception {
+		
+		if(boardService.delete(projectCode)) {
+			rttr.addFlashAttribute("result","success");
+		}
+		return "redirect:/board";
 		
 	}
 	

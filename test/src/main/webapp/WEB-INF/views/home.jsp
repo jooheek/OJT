@@ -67,9 +67,12 @@
                                     <tbody>
                                     <c:forEach var ="list" items="${getList}">
                                         <tr>
-	                                        <td><c:out value="${list.projectCode}"/></td>
+                                        	<td><c:out value="${list.projectCode}"/></td>
 	                                        <td><c:out value="${list.projectId}"/></td>
-	                                        <td><c:out value="${list.projectName}"/></td>
+	                                        <td>
+	                                        	<a href="/board/get?projectCode=<c:out value="${list.projectCode}"/>">
+	                                        	<c:out value="${list.projectName}"/></a>
+	                                        </td>
 	                                        <td><c:out value="${list.projectManager}"/></td>
 	                                        <td><c:out value="${list.projectContractor}"/></td>
 	                                        <td><c:out value="${list.projectArea}"/></td>
@@ -83,16 +86,67 @@
 	                                        <td><c:out value="${list.goods}"/></td>
                                         </tr>
                                       </c:forEach>
+                                      	<tr>
+											<td data-name="projectCode">
+											</td>
+											<td data-name="projectId">
+											    <input type="text" name='projectId'  class="form-control"/>
+											</td>
+											<td data-name="projectName">
+											    <input type="text" name='projectName' class="form-control"/>
+											</td>
+					    					<td data-name="projectManager">
+											    <input type="text" name='projectManager' class="form-control"/>
+											</td>
+											<td data-name="projectContractor">
+											    <input type="text" name='projectContractor'class="form-control"/>
+											</td>
+											<td data-name="projectArea">
+											    <select name="sel0">
+					        				        <option value="----">분야</option>
+					    					        <option value="민간">민간</option>
+					        				        <option value="공공">공공</option>
+					        				        <option value="통신">통신</option>
+											    </select>
+											</td>
+											<td data-name="teamName">
+											    <input type="text" name='teamName' class="form-control"/>
+											</td>
+											<td data-name="startDate">
+											    <input type="text" name='startDate' class="form-control"/>
+											</td>
+											<td data-name="endDate">
+											    <input type="text" name='endDate' class="form-control"/>
+											</td>
+											<td data-name="expense">
+											    <input type="text" name='expense' class="form-control"/>
+											</td>
+											<td data-name="outsourcingCost">
+											    <input type="text" name='outsourcingCost' class="form-control"/>
+											</td>
+											<td data-name="netSales">
+											    <input type="text" name='netSales' class="form-control"/>
+											</td>
+											<td data-name="sales">
+											    <input type="text" name='sales' class="form-control"/>
+											</td>
+											<td data-name="goods">
+											    <input type="text" name='goods' class="form-control"/>
+											</td>
+										</tr>
                                     </tbody>
                                 </table>
                             </div>
                             <%--table --%>
                         </div>
                     </div>
-                    <div>
-                    	<form action ="/board/insertView" method ="get">
-                    	<button id="insert" type ="button">입력</button>
-                    	</form>
+                    <div style="float:right">
+                    	<button id="insert" type ="button">저장</button>
+                    	<!--  row에 데이터를 입력하고 저장하면 데이터 입력됨 -->
+                    	<button id="write" type ="button">입력</button>
+                    	<!-- 입력버튼 누를떄마다 밑에 row하나씩 생김 -->
+                    	<button id ="update" type="button">수정</button>
+                    	<!-- projectName클릭하면 input text가 생기고 수정가능 -->
                    	</div>
                 </div>
             </div>
@@ -101,11 +155,14 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#insert").on("click",function(){
-		location.href="insertView";
+		location.href="view";
+		console.log(projectCode);
 		
+	//$("#selectBox option:selected").val();
 	
 	});
 })
+
 
 
 </script>        

@@ -35,7 +35,7 @@ public class BoardVO {
 	private String projectContractor;
 	private String projectArea;
 	private String teamName;
-	private int expence;
+	private int expense;
 	private int outsourcingCost;
 	private int netSales;
 	private int sales;
@@ -97,11 +97,11 @@ public class BoardVO {
 	public void setProjectContractor(String projectContractor) {
 		this.projectContractor = projectContractor;
 	}
-	public int getExpence() {
-		return expence;
+	public int getExpense() {
+		return expense;
 	}
-	public void setExpence(int expence) {
-		this.expence = expence;
+	public void setExpense(int expense) {
+		this.expense = expense;
 	}
 	public int getOutsourcingCost() {
 		return outsourcingCost;

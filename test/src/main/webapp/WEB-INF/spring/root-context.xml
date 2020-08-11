@@ -24,8 +24,14 @@
         <property name="configLocation" value="classpath:mybatis/config.xml"/>
         <property name="mapperLocations" value="classpath:mapper/Mapper.xml"></property>
     </bean>
+    <!-- mapper를 인식하도록 설정 -->
     
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
-    </bean> 
+    </bean>
+    <!--SqlSessionTemplate dao와 db가 직접연결할 필요가 없게해준다 -->
+    <!-- mybatis 와 sqlsession인터페이스를 구현한 클래스 기본적인 트랜잭션의 관리나 쓰레드 처리의 안정성을 보장하고 데이터베이스를 연결하고 종료한다 --> 
+    
+    <!-- dao를 빈으로 등록할수 있게 context:component추가 -->
+    
 </beans>
