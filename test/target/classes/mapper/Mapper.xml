@@ -14,8 +14,9 @@
 	
 	<select id="read" resultType="org.joohee.A00.VO.BoardVO">
 		SELECT *
-		from project A, finance B
-		WHERE A.projectCode = B.projectCode AND A.projectCode= #{projectCode}
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+		WHERE P.projectCode =#{projectCode}
 	
 	
 	</select>
@@ -32,6 +33,15 @@
 		FROM project
 		WHERE projectcode=#{projectcode}
 	</delete>
+	
+	<update id="update" parameterType="org.joohee.A00.VO.BoardVO">
+		UPDATE project P INNER JOIN finance F
+			ON P.projectCODE = F.projectCode
+		SET P.projectId=#{projectId},P.projectName=#{projectName},P.startDate=#{startDate},P.endDate=#{endDate}
+		,P.projectManager=#{projectManager},P.projectContractor=#{projectContractor},P.projectArea=#{projectArea},P.teamName=#{teamName},
+		F.expense=#{expense},F.outsourcingCost=#{outsourcingCost},F.netSales=#{netSales},F.sales=#{sales},F.goods=#{goods}
+		WHERE P.projectCode=#{projectCode}
+	</update>
 
 
 </mapper>

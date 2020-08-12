@@ -10,7 +10,7 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
-<  
+ 
   
 <html>
 <head>
@@ -143,7 +143,7 @@
                             <%--table --%>
                         </div>
                     </div>
-                    <div style="float:right">
+                    <div style="float:right;">
                     	<button id="insert" type ="button">입력</button>
                     	<!--  row에 데이터를 입력하고 저장하면 데이터 입력됨 -->
                     	<button id="write" type ="button">//입력</button>

@@ -94,7 +94,7 @@
 			</form>
 			<button type="submit" class="updateBtn">수정</button>
 			<button type="submit" class="listBtn" >목록으로</button>
-			<button type="submit" class="deleteBtn">삭제</button>
+			<button type="submit" class="deleteBtn" >삭제</button>
 		</div>
 	</div>
 </div>
@@ -111,7 +111,6 @@
 //$("#selectBox option:selected").val();
 
 
- 
 $(document).ready(function(){
 			var formObj = $("form[name='readForm']");
 			
@@ -119,17 +118,20 @@ $(document).ready(function(){
 			
 			$(".updateBtn").on("click", function(){
 				formObj.attr("action", "/board/update");
-				formObj.attr("method", "get");
+				formObj.attr("method", "post");
 				formObj.submit();				
 			})
 			
 			// 삭제
-			$(".deleteBtn").on("click", function(){
-				formObj.attr("action", "/board/delete");
-				formObj.attr("method", "post");
-				formObj.submit();
+			 $(".deleteBtn").on("click", function(){
+				var result = confirm(${board.projectCode}+"번째 프로젝트를 삭제하시겠습니까?");
+				if(result){
+					formObj.attr("action", "/board/delete?projectCode="+${board.projectCode});
+					formObj.attr("method", "post");
+					formObj.submit();
+				}
 			})
-			
+			 
 			// 취소
 			$(".listBtn").on("click", function(){
 				

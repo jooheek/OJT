@@ -89,9 +89,9 @@ public class HomeController {
 		
 	}
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
-	public String delete(BoardVO vo)throws Exception {
+	public String delete(@RequestParam("projectCode")int projectCode)throws Exception {
 		
-		boardService.delete(vo.getProjectCode());
+		boardService.delete(projectCode);
 		
 		return "redirect:/board/";
 		
