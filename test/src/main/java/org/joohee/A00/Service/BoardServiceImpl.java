@@ -60,9 +60,15 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public boolean delete(int projectCode) {
+	public void delete(int projectCode) {
 
-		return boardMapper.delete(projectCode) ==1;
+		boardMapper.delete(projectCode);
+	}
+
+	@Override
+	public void write(BoardVO vo) throws Exception {
+
+		boardMapper.write(vo);
 	}
 
 

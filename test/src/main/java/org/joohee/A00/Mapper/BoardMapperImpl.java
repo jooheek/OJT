@@ -69,9 +69,17 @@ public class BoardMapperImpl implements BoardMapper{
 
 
 	@Override
-	public int delete(int projectCode) {
+	public void delete(int projectCode) {
 			
-		return sqlSession.delete(delete,projectCode);
+		sqlSession.delete(delete,projectCode);
+	}
+
+
+
+	@Override
+	public void write(BoardVO vo) throws Exception {
+
+		sqlSession.insert("BoardMapper.insert",vo);
 	}
 
 

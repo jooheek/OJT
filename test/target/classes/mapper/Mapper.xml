@@ -5,9 +5,10 @@
 <mapper namespace="org.joohee.A00.Mapper.BoardMapper">
 	
 	<select id ="getList" resultType="java.util.Map">
-		SELECT *
-		from project A LEFT JOIN finance B
-		ON A.projectCode = B.projectCode
+		SELECT @rownum:=@rownum+1 AS R,P.*,F.*
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+		WHERE(@ROWNUM:=0)=0
 	
 	</select>
 	
@@ -26,8 +27,10 @@
 	
 	</insert>
 	
-	<delete id="deleteBoard">
-		DELETE FROM project WHERE projectcode=#{projectcode}
+	<delete id="delete">
+		DELETE 
+		FROM project
+		WHERE projectcode=#{projectcode}
 	</delete>
 
 

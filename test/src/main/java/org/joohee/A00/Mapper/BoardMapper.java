@@ -23,6 +23,8 @@ public interface BoardMapper {
 
 	public BoardVO read(int projectCode);
 
-	public int delete(int projectCode);
+	public void delete(int projectCode);
+	
+	public void write(BoardVO vo)throws Exception;
 	
 }

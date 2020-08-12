@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%-- <%@ taglib uri=" http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -13,10 +14,11 @@
 <body>
 
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
+<c:set var="now" value="<%= new java.util.Date() %>" />
 <div class="container">
     <div class="row clearfix">
-    	<div class="col-md-12 table-responsive">
+    	<div class="col-md-12">
+    	<form name="readForm" role="form" method="post">
 			<table class="table table-bordered table-hover table-sortable" id="tab_logic">
 				<thead>
 					<tr>
@@ -65,7 +67,8 @@
 					    <input type="text" name='teamName' class="form-control" value="${board.teamName}"/>
 					</td>
 					<td data-name="startDate">
-					    <input type="text" name='startDate' class="form-control" value="${board.startDate}"/>
+					<input type="text" name='teamName' class="form-control" value="${board.startDate}"/>
+					<!-- fmt 적용해야함 -->
 					</td>
 					<td data-name="endDate">
 					    <input type="text" name='endDate' class="form-control" value="${board.endDate}"/>
@@ -88,10 +91,10 @@
 					</tr>
 				</tbody>
 			</table>
-			
-			<button>저장</button>
-			<button onclick="history.back()">목록으로</button>
-			<button id="deleteBtn" onclick="test()">삭제</button>
+			</form>
+			<button type="submit" class="updateBtn">수정</button>
+			<button type="submit" class="listBtn" >목록으로</button>
+			<button type="submit" class="deleteBtn">삭제</button>
 		</div>
 	</div>
 </div>
@@ -105,16 +108,34 @@
 	  location.href="//delete?projectCode='${board.projectCode}'"
 	}
  */
+//$("#selectBox option:selected").val();
 
+
+ 
 $(document).ready(function(){
-	$("#deleteBtn").on("click",function(){
-		location.href="/board/delete?projectCode=${board.projectCode}";
-		console.log(projectCode);
-		
-	//$("#selectBox option:selected").val();
-	
-	});
-})
+			var formObj = $("form[name='readForm']");
+			
+			// 수정 
+			
+			$(".updateBtn").on("click", function(){
+				formObj.attr("action", "/board/update");
+				formObj.attr("method", "get");
+				formObj.submit();				
+			})
+			
+			// 삭제
+			$(".deleteBtn").on("click", function(){
+				formObj.attr("action", "/board/delete");
+				formObj.attr("method", "post");
+				formObj.submit();
+			})
+			
+			// 취소
+			$(".listBtn").on("click", function(){
+				
+				location.href = "/board/";
+			})
+		})
 
 
 </script>

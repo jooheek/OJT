@@ -22,7 +22,9 @@ public interface BoardService {
 
 	public BoardVO read(int projectCode);
 	
-	public boolean delete(int projectCode);
+	public void delete(int projectCode);
+	
+	public void write(BoardVO vo)throws Exception;
 
 
 }

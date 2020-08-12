@@ -41,7 +41,6 @@ public class HomeController {
 		List<Map<String,Object>>list = boardService.getList(map);
 		
 		model.addAttribute("getList",list);
-		
 		return "home";
 	}
 	
@@ -54,9 +53,25 @@ public class HomeController {
 	 * 
 	 * }
 	 */
-	@RequestMapping(value="/board/insertView",method = RequestMethod.GET)
-	public String insertView(@ModelAttribute BoardVO vo)throws Exception{
-		return "insertView";
+	
+	//작성화면
+	@RequestMapping(value="/board/writeView",method = RequestMethod.GET)
+	public String insertView()throws Exception{
+		
+		logger.info("writeView");
+		return "writeView";
+	}
+	
+	//작성
+	@RequestMapping(value="/board/write",method=RequestMethod.POST)
+	public String insert(BoardVO vo)throws Exception{
+		
+		logger.info("write");
+		
+		boardService.write(vo);
+		
+		return "redirect:/";
+		
 	}
 	
 	@RequestMapping(value="/get",method=RequestMethod.GET)
@@ -73,13 +88,12 @@ public class HomeController {
 		return null;
 		
 	}
-	@RequestMapping(value="/delete",method=RequestMethod.GET)
-	public String delete(@RequestParam("projectCode")int projectCode,RedirectAttributes rttr)throws Exception {
+	@RequestMapping(value="/delete",method=RequestMethod.POST)
+	public String delete(BoardVO vo)throws Exception {
 		
-		if(boardService.delete(projectCode)) {
-			rttr.addFlashAttribute("result","success");
-		}
-		return "redirect:/board";
+		boardService.delete(vo.getProjectCode());
+		
+		return "redirect:/board/";
 		
 	}
 	

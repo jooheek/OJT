@@ -1,7 +1,7 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%-- <%@ taglib uri=" http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
 <%@ page session="false" %>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -10,6 +10,8 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
+<  
+  
 <html>
 <head>
 	<title>Home</title>
@@ -48,7 +50,7 @@
                                 <table class="table" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>projectCode</th>
+                                            <th>#</th>
                                             <th>projectId</th>
                                             <th>projectName</th>
                                             <th>projectManager</th>
@@ -67,7 +69,8 @@
                                     <tbody>
                                     <c:forEach var ="list" items="${getList}">
                                         <tr>
-                                        	<td><c:out value="${list.projectCode}"/></td>
+                                        	<td><c:out value="${list.R}"/></td>
+                                        	<!-- rownum동작안됨 -->
 	                                        <td><c:out value="${list.projectId}"/></td>
 	                                        <td>
 	                                        	<a href="/board/get?projectCode=<c:out value="${list.projectCode}"/>">
@@ -141,9 +144,9 @@
                         </div>
                     </div>
                     <div style="float:right">
-                    	<button id="insert" type ="button">저장</button>
+                    	<button id="insert" type ="button">입력</button>
                     	<!--  row에 데이터를 입력하고 저장하면 데이터 입력됨 -->
-                    	<button id="write" type ="button">입력</button>
+                    	<button id="write" type ="button">//입력</button>
                     	<!-- 입력버튼 누를떄마다 밑에 row하나씩 생김 -->
                     	<button id ="update" type="button">수정</button>
                     	<!-- projectName클릭하면 input text가 생기고 수정가능 -->
@@ -155,7 +158,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#insert").on("click",function(){
-		location.href="view";
+		location.href="writeView";
 		console.log(projectCode);
 		
 	//$("#selectBox option:selected").val();
