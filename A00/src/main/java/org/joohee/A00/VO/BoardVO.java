@@ -127,5 +127,15 @@ public class BoardVO {
 	public void setGoods(int goods) {
 		this.goods = goods;
 	}
+	@Override
+	public String toString() {
+		return "BoardVO [projectCode=" + projectCode + ", projectId=" + projectId + ", projectName=" + projectName
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", projectManager=" + projectManager
+				+ ", projectContractor=" + projectContractor + ", projectArea=" + projectArea + ", teamName=" + teamName
+				+ ", expense=" + expense + ", outsourcingCost=" + outsourcingCost + ", netSales=" + netSales
+				+ ", sales=" + sales + ", goods=" + goods + "]";
+	}
+	
+	
 	
 }

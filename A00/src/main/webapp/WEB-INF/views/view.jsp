@@ -2,20 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%-- <%@ taglib uri=" http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <!-- datepicker사용 -->
 <!DOCTYPE html>
 <html>
 <head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>window for update and delete</title>
 </head>
 <body>
 
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <c:set var="now" value="<%= new java.util.Date() %>" />
 <div class="container">
     <div class="row clearfix">
@@ -59,7 +55,7 @@
 						  <input type="text" name='projectContractor'class="form-control"value="${board.projectContractor}"/>
 					</td>
 					<td data-name="projectArea">
-					    <select name="sel0" id="selected" onchange="selectData(this.value)">
+					    <select name="sel0" id="selected">
 				        <option value="분야">분야</option>
 				        <option value="민간">민간</option>
 				        <option value="공공">공공</option>
@@ -69,6 +65,7 @@
 					<td data-name="teamName">
 					    <input type="text" name='teamName' class="form-control" value="${board.teamName}"/>
 					</td>
+					<!-- update를 하면 데이터가 뭉쳐서 나오는 현상... -->
 					<td data-name="startDate">
 					<input type="text" name='teamName' class="form-control" value="${board.startDate}"/>
 					<!-- fmt 적용해야함 -->
@@ -105,7 +102,9 @@
 <%-- <c:forEach var="name" items="${board}" varStatus="status">
     				<p>${name.projectCode}</p>
 				</c:forEach> --%>
-
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
 /* window.test = function() {
 	  location.href="//delete?projectCode='${board.projectCode}'"
@@ -118,17 +117,16 @@ $(document).ready(function(){
 			var formObj = $("form[name='readForm']");
 			
 			// 수정 
-			
 			$(".updateBtn").on("click", function(){
 				var result = confirm(${board.projectCode}+"번째 프로젝트를 수정하시겠습니까?")
 				if(result){
 					formObj.attr("action", "/board/update?projectCode="+${board.projectCode});
-					<!--url에 projectCode값만 넘겨주니까 그값빼고는 넘어가는게 없는것-->
-					<!--근데 다른 수정사항은 어떻게 넘어가는거지 -->
 					formObj.attr("method", "post");
 					formObj.submit();
+					
 				}				
 			})
+			
 			
 			// 삭제
 			 $(".deleteBtn").on("click", function(){
@@ -148,13 +146,9 @@ $(document).ready(function(){
 
 		})
 		
-		function selectData(str){
-			alert( str+ "선택");
-		}
-		
-
 
 </script>
+
 
 </body>
 </html>

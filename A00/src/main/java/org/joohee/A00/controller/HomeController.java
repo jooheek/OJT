@@ -1,28 +1,29 @@
 package org.joohee.A00.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.joohee.A00.Service.BoardService;
 import org.joohee.A00.VO.BoardVO;
+import org.joohee.A00.VO.Criteria;
+import org.joohee.A00.VO.PageMaker;
+import org.joohee.A00.VO.SearchCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
-@RequestMapping("/board/*")
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -34,72 +35,82 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String list( Model model,HttpServletRequest request, HttpServletResponse response) throws Exception{
-		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
-		Map<String,Object>map = new HashMap<String,Object>();
-		List<Map<String,Object>>list = boardService.getList(map);
+	@RequestMapping(value = "/board")
+	public ModelAndView list(@ModelAttribute("scri")SearchCriteria scri) throws Exception{
 		
-		model.addAttribute("getList",list);
-		return "home";
+		logger.info("getList");
+
+		ModelAndView mav = new ModelAndView();
+		PageMaker pageMaker = new PageMaker();
+		
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(boardService.countBoardList(scri));
+		
+		List<Map<String, Object>> listB = boardService.getList(scri);
+		mav.addObject("listB",listB);
+		mav.addObject("pageMaker",pageMaker);
+		
+		return mav;
 	}
 	
-	/*
-	 * @RequestMapping(value="/board/insert",method =RequestMethod.GET) public
-	 * String insert(@ModelAttribute BoardVO vo)throws Exception {
-	 * boardService.insert(vo);
-	 * 
-	 * return "redirect:/";
-	 * 
-	 * }
-	 */
-	
+
 	//작성화면
-	@RequestMapping(value="/board/writeView",method = RequestMethod.GET)
+	@RequestMapping(value="/writeView",method = RequestMethod.GET)
 	public String insertView()throws Exception{
 		
 		logger.info("writeView");
+		
 		return "writeView";
 	}
 	
 	//작성
-	@RequestMapping(value="/board/write",method=RequestMethod.POST)
+	@RequestMapping(value="/write",method=RequestMethod.POST)
 	public String insert(BoardVO vo)throws Exception{
 		
 		logger.info("write");
 		
 		boardService.write(vo);
 		
-		return "redirect:/";
+		return "redirect:/board";
 		
 	}
 	
-	@RequestMapping(value="/get",method=RequestMethod.GET)
-	public String read(@RequestParam("projectCode")int projectCode,Model model )throws Exception {
+	@RequestMapping(value="/board/get",method=RequestMethod.GET)
+	public String read(@RequestParam("projectCode")int projectCode,Model model,BoardVO vo)throws Exception {
 		
-		model.addAttribute("board",boardService.read(projectCode));
+		logger.info("read");
+		
+		model.addAttribute("board",boardService.read(vo.getProjectCode()));
 		
 		return "view";
 		
 	}
+	//requestparam 삭제
 	
-	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String update(BoardVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
+	@RequestMapping(value="/board/update",method=RequestMethod.POST)
+	public String update(BoardVO vo,Model model,Criteria cri,@ModelAttribute("scri")SearchCriteria scri)throws Exception{
 		logger.info("update");
-		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
-		boardService.update(vo);
 		
-		return "redirect:/board/";
+		model.addAttribute("listB",boardService.getList(scri));
+		boardService.update(vo);
+
+		return "redirect:/board";
 		
 	}
-	@RequestMapping(value="/delete",method=RequestMethod.POST)
-	public String delete(@RequestParam("projectCode")int projectCode)throws Exception {
+	
+	//update에 반영되는 criteria ?? SearchCriteria 파라미터를 받아와야하는 이유-> update 후 바로  값을 넘겨주기 떄문
+	
+	@RequestMapping(value="/board/delete",method=RequestMethod.POST)
+	public String delete(BoardVO vo,Criteria cri,RedirectAttributes rttr)throws Exception {
 		
-		boardService.delete(projectCode);
+		logger.info("delete");
 		
-		return "redirect:/board/";
+		boardService.delete(vo.getProjectCode());
+		
+		rttr.addAttribute("page",cri.getPage());
+		rttr.addAttribute("perPageNum",cri.getPerPageNum());
+		
+		return "redirect:/board";
 		
 	}
 	

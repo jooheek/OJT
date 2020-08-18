@@ -21,6 +21,8 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.joohee.A00.VO.BoardVO;
+import org.joohee.A00.VO.Criteria;
+import org.joohee.A00.VO.SearchCriteria;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -38,15 +40,18 @@ public class BoardMapperImpl implements BoardMapper{
 	@Inject
 	private SqlSession sqlSession;
 	
-//	private static final String getList="BoardMapper.getList";
-	private static final String read ="BoardMapper.insert";
-	private static final String insert="BoardMapper.insertBoard";
+	private static final String getList="BoardMapper.getList";
+	private static final String read ="BoardMapper.read";
 	private static final String delete ="BoardMapper.deleteBoard";
+	private static final String insertP ="BoardMapper.insertP";
+	private static final String insertF ="BoardMapper.insertF";
+	private static final String update ="BoardMapper.update";
+	private static final String countBoardList ="BoardMapper.countBoardList";
 
 	@Override
-	public List<Map<String, Object>> getList(Map<String, Object> map) {
+	public List<Map<String, Object>> getList(SearchCriteria scri) {
 
-		return null;
+		return sqlSession.selectList(getList,scri);
 	}
 
 
@@ -60,15 +65,6 @@ public class BoardMapperImpl implements BoardMapper{
 
 
 	@Override
-	public void insert(BoardVO vo) {
-		
-		sqlSession.insert(insert,vo);
-		
-	}
-
-
-
-	@Override
 	public void delete(int projectCode) {
 			
 		sqlSession.delete(delete,projectCode);
@@ -77,9 +73,9 @@ public class BoardMapperImpl implements BoardMapper{
 
 
 	@Override
-	public void write(BoardVO vo) throws Exception {
+	public void insertP(BoardVO vo) throws Exception {
 
-		sqlSession.insert("BoardMapper.insert",vo);
+		sqlSession.insert(insertP,vo);
 	}
 
 
@@ -87,8 +83,23 @@ public class BoardMapperImpl implements BoardMapper{
 	@Override
 	public void update(BoardVO vo) throws Exception {
 
-		sqlSession.update("BoardMapper.update",vo);
+		sqlSession.update(update,vo);
 	}
 
 
+
+	@Override
+	public int countBoardList(SearchCriteria scri) throws Exception {
+
+		return (Integer)sqlSession.selectOne(countBoardList,scri);
+	}
+	//integer로 파싱해야함??
+
+
+
+	@Override
+	public void insertF(BoardVO vo) throws Exception {
+		
+		sqlSession.insert(insertF,vo);
+	}
 }

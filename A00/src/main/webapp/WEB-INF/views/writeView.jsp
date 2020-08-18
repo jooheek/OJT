@@ -1,23 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<title>입력창</title>
 </head>
 <body>
 
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
 <div class="container">
     <div class="row clearfix">
     	<div class="col-md-12 table-responsive">
-    	<form role="form" method="post"action="/board/write">
-			<table class="table table-bordered table-hover table-sortable" id="tab_logic">
+    	<form role="form" method="post"action="/board/write"name="insertForm">
+			<table  class="table table-bordered table-hover table-sortable" id="tab_logic">
 				<thead>
 					<tr>
                    		<th>projectCode</th>
@@ -53,7 +52,7 @@
 						   <input type="text" name='projectContractor'class="form-control"/>
 						</td>
 						<td data-name="projectArea">
-						   <select name="sel0">
+						   <select name="sel0" name="projectArea">
 					        <option value="----">분야</option>
 					     	<option value="민간">민간</option>
 					        <option value="공공">공공</option>
@@ -90,6 +89,7 @@
 					</tr>
 				</tbody>
 			</table>
+			<button type="submit" class="insertBtn">저장</button>
 			</form>
 		</div>
 	</div>
@@ -97,11 +97,35 @@
 </div>
 
 
-
-
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 <script>
-$(document).ready(function() {
+
+ 
+$(document).ready(function(){
+	var formObj = $("form[name='insertForm']");
+	
+	// 삭제
+	 $(".insertBtn").on("click", function(){
+		var result = confirm("새로운 프로젝트를 입력하시겠습니까?");
+		if(result){
+			formObj.attr("action", "/write");
+			formObj.attr("method", "post");
+			formObj.submit();
+		}
+	})
+	 
+	// 취소
+	$(".listBtn").on("click", function(){
+		location.href = "/board/";
+	})
+
+}) 
+
+/*
+ $(document).ready(function() {
     $("#add_row").on("click", function() {
         // Dynamic Rows Code
         
@@ -144,14 +168,14 @@ $(document).ready(function() {
         });
         
         // add delete button and td
-        /*
+        
         $("<td></td>").append(
             $("<button class='btn btn-danger glyphicon glyphicon-remove row-remove'></button>")
                 .click(function() {
                     $(this).closest("tr").remove();
                 })
         ).appendTo($(tr));
-        */
+        
         
         // add the new row
         $(tr).appendTo($('#tab_logic'));
@@ -185,6 +209,6 @@ $(document).ready(function() {
 
 
     $("#add_row").trigger("click");
-});
+}); */
 </script>
 </html>

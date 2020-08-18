@@ -19,11 +19,15 @@ import java.util.Map;
 
 import org.joohee.A00.Mapper.BoardMapper;
 import org.joohee.A00.VO.BoardVO;
+import org.joohee.A00.VO.Criteria;
+import org.joohee.A00.VO.SearchCriteria;
 import org.joohee.A00.controller.HomeController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <PRE>
@@ -43,15 +47,9 @@ public class BoardServiceImpl implements BoardService{
 	private BoardMapper boardMapper;
 
 	@Override
-	public List<Map<String, Object>> getList(Map<String, Object> map) {
-		List<Map<String, Object>> list = boardMapper.getList(map);
+	public List<Map<String, Object>> getList(SearchCriteria scri) {
 		
-		return list;
-	}
-
-	@Override
-	public void insert(BoardVO vo) {
-		
+		return boardMapper.getList(scri);
 	}
 
 	@Override
@@ -64,11 +62,17 @@ public class BoardServiceImpl implements BoardService{
 
 		boardMapper.delete(projectCode);
 	}
-
+ 
+	@Transactional(readOnly = false)
 	@Override
 	public void write(BoardVO vo) throws Exception {
-
-		boardMapper.write(vo);
+		
+		logger.info("write");
+		logger.info(vo.toString());
+		boardMapper.insertP(vo);
+		logger.info(vo.toString());
+		boardMapper.insertF(vo);
+		 
 	}
 
 	@Override
@@ -77,6 +81,11 @@ public class BoardServiceImpl implements BoardService{
 		boardMapper.update(vo);
 	}
 
+	@Override
+	public int countBoardList(SearchCriteria scri) throws Exception{
 
+		return boardMapper.countBoardList(scri);
+	}
+	//EXCEPTION적용안하면 오류나는 이유
 
 }

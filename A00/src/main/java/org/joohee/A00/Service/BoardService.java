@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.joohee.A00.VO.BoardVO;
+import org.joohee.A00.VO.Criteria;
+import org.joohee.A00.VO.SearchCriteria;
 
 
 /**
@@ -16,9 +18,7 @@ import org.joohee.A00.VO.BoardVO;
 public interface BoardService {
 	
 	
-	public List<Map<String,Object>> getList(Map<String,Object>map);
-
-	public void insert(BoardVO vo);
+	public List<Map<String,Object>> getList(SearchCriteria scri);
 
 	public BoardVO read(int projectCode);
 	
@@ -27,4 +27,6 @@ public interface BoardService {
 	public void write(BoardVO vo)throws Exception;
 
 	public void update(BoardVO vo)throws Exception;
+	
+	public int countBoardList(SearchCriteria scri)throws Exception;
 }
