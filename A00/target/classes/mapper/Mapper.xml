@@ -42,7 +42,7 @@
 	
 	<insert id="insertF" parameterType="org.joohee.A00.VO.BoardVO">
 		INSERT INTO finance(projectCode,expense,outsourcingCost,netSales,sales,goods)
-		VALUES(LAST_INSERT_ID(),#{expense},#{outsourcingCost},#{netSales},#{sales},#{goods})
+		VALUES(#{projectCode},#{expense},#{outsourcingCost},#{netSales},#{sales},#{goods})
 	
 	</insert>
 	<!-- LAST_INSERT_ID()로 방금입력된 pk의 값을 가져옴-->

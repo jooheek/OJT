@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.joohee.A00.VO.BoardVO;
-import org.joohee.A00.VO.Criteria;
 import org.joohee.A00.VO.SearchCriteria;
 
 

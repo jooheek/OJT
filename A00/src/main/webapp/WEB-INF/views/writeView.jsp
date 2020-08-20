@@ -15,7 +15,7 @@
 <div class="container">
     <div class="row clearfix">
     	<div class="col-md-12 table-responsive">
-    	<form role="form" method="post"action="/board/write"name="insertForm">
+    	<form role="form" method="post" id="insertForm">
 			<table  class="table table-bordered table-hover table-sortable" id="tab_logic">
 				<thead>
 					<tr>
@@ -40,19 +40,19 @@
 						<td data-name="projectCode">
 						</td>
 						<td data-name="projectId">
-						    <input type="text" name='projectId'  class="form-control"/>
+						    <input type="text" name='projectId' id='projectId'  class="form-control"/>
 						</td>
 						<td data-name="projectName">
-						    <input type="text" name='projectName' class="form-control"/>
+						    <input type="text" name='projectName' id='projectName' class="form-control"/>
 						</td>
 					    <td data-name="projectManager">
-						   <input type="text" name='projectManager' class="form-control"/>
+						   <input type="text" name='projectManager' id='projectManager' class="form-control"/>
 						</td>
 						<td data-name="projectContractor">
-						   <input type="text" name='projectContractor'class="form-control"/>
+						   <input type="text" name='projectContractor' id='projectContractor' class="form-control"/>
 						</td>
 						<td data-name="projectArea">
-						   <select name="sel0" name="projectArea">
+						   <select  id="projectArea"onchange ="projectArea(this.value)">
 					        <option value="----">분야</option>
 					     	<option value="민간">민간</option>
 					        <option value="공공">공공</option>
@@ -60,28 +60,28 @@
 						   </select>
 						</td>
 						<td data-name="teamName">
-						    <input type="text" name='teamName' class="form-control"/>
+						    <input type="text" name='teamName' id='teamName' class="form-control"/>
 						</td>
 						<td data-name="startDate">
-						   <input type="text" name='startDate' class="form-control"/>
+						   <input type="text" name='startDate' id='startDate' class="form-control"/>
 						</td>
 						<td data-name="endDate">
-						   <input type="text" name='endDate' class="form-control"/>
+						   <input type="text" id='endDate' class="form-control"/>
 						</td>
 						<td data-name="expense">
-						   <input type="text" name='expense' class="form-control"/>
+						   <input type="text" id='expense' class="form-control"/>
 						</td>
 						<td data-name="outsourcingCost">
-						   <input type="text" name='outsourcingCost' class="form-control"/>
+						   <input type="text" id='outsourcingCost' class="form-control"/>
 						</td>
 						<td data-name="netSales">
-						   <input type="text" name='netSales' class="form-control"/>
+						   <input type="text" id='netSales' class="form-control"/>
 						</td>
 						<td data-name="sales">
-						  <input type="text" name='sales' class="form-control"/>
+						  <input type="text" id='sales' class="form-control"/>
 						</td>
 						<td data-name="goods">
-						   <input type="text" name='goods' class="form-control"/>
+						   <input type="text" id='goods' class="form-control"/>
 						</td>
                         <td data-name="del">
                             <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true">×</span></button>
@@ -89,7 +89,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<button type="submit" class="insertBtn">저장</button>
+			<button type="submit" onclick = "insert()">저장</button>
 			</form>
 		</div>
 	</div>
@@ -103,9 +103,20 @@
 </body>
 <script>
 
+
+
+function projectArea(str){
+	var selectValue = document.getElementById('projectArea').value;
+
+	if(!selectValue){
+		console.log("분야를 선택해주세요")
+	}else{
+		console.log("분야가 선택되었습니다.")
+	}
+}
  
 $(document).ready(function(){
-	var formObj = $("form[name='insertForm']");
+ 	var formObj = $("form[name='insertForm']");
 	
 	// 삭제
 	 $(".insertBtn").on("click", function(){
@@ -115,7 +126,7 @@ $(document).ready(function(){
 			formObj.attr("method", "post");
 			formObj.submit();
 		}
-	})
+	}) 
 	 
 	// 취소
 	$(".listBtn").on("click", function(){
@@ -123,6 +134,49 @@ $(document).ready(function(){
 	})
 
 }) 
+
+
+
+function insert(){
+	
+	var data =$("#insertForm")[0];
+	var formData = new FormData(data);
+	console.log(formData);
+	
+	$.ajax({
+		contentType:"application/json",
+		dataType:'json',
+		data:JSON.stringify(formData),
+		url:'/write',
+		type:'POST',
+		success:function(){
+			alert("success");	
+		},
+		error:function(){
+			alert("error");
+		}
+	});
+}
+
+/* 
+	var sendData={
+		"projectId":$('#projectId').val(),
+		"projectName":$('#projectName').val(),
+		"startDate":$('#startDate').val(),
+		"endDate":$('#endDate').val(),
+		"projectManager":$('#projectManagers').val(),
+		"projectContractor":$('#projectContractor').val(),
+		"projectArea":$('#projectArea').val(),
+		"teamName":$('#teamName').val(),
+		"expense":$('#expense').val(),
+		"outsourcingCost":$('#outsourcingCost').val(),
+		"netSales":$('#netSales').val(),
+		"sales":$('#sales').val(),
+		"goods":$('#goods').val()
+	};
+
+		
+	) */
 
 /*
  $(document).ready(function() {

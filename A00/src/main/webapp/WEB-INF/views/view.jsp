@@ -16,7 +16,7 @@
 <div class="container">
     <div class="row clearfix">
     	<div class="col-md-12">
-    	<form name="readForm" role="form" method="post">
+    	<form id="frm" name="readForm" role="form">
 			<table class="table table-bordered table-hover table-sortable" id="tab_logic">
 				<thead>
 					<tr>
@@ -40,6 +40,7 @@
     				<tr>
     				<td data-name="projectCode">
     				${board.projectCode}
+    				<input type="hidden" name="projectCode" value="${board.projectCode}">
     				</td>
 					<td data-name="projectId">
 					<input type="text" name='projectId' class="form-control" value="${board.projectId}"/>
@@ -55,7 +56,7 @@
 						  <input type="text" name='projectContractor'class="form-control"value="${board.projectContractor}"/>
 					</td>
 					<td data-name="projectArea">
-					    <select name="sel0" id="selected">
+					    <select name="projectArea" id="selected">
 				        <option value="분야">분야</option>
 				        <option value="민간">민간</option>
 				        <option value="공공">공공</option>
@@ -67,7 +68,7 @@
 					</td>
 					<!-- update를 하면 데이터가 뭉쳐서 나오는 현상... -->
 					<td data-name="startDate">
-					<input type="text" name='teamName' class="form-control" value="${board.startDate}"/>
+					<input type="text" name='startDate' class="form-control" value="${board.startDate}"/>
 					<!-- fmt 적용해야함 -->
 					</td>
 					<td data-name="endDate">
@@ -88,17 +89,18 @@
 					<td data-name="goods">
 					  <input type="text" name='goods' class="form-control" value="${board.goods}"/>
 					</td>
+					
 					</tr>
 				</tbody>
 			</table>
+			<button type="submit" onclick="update()">수정</button>
 			</form>
-			<button type="submit" class="updateBtn">수정</button>
+			
 			<button type="submit" class="listBtn" >목록으로</button>
 			<button type="submit" class="deleteBtn" >삭제</button>
 		</div>
 	</div>
 </div>
-
 <%-- <c:forEach var="name" items="${board}" varStatus="status">
     				<p>${name.projectCode}</p>
 				</c:forEach> --%>
@@ -106,14 +108,31 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
-/* window.test = function() {
-	  location.href="//delete?projectCode='${board.projectCode}'"
-	}
- */
-//$("#selectBox option:selected").val();
 
 
-$(document).ready(function(){
+function update(){
+	
+	var data = $("form").serialize();
+	console.log(data);
+
+	$.ajax({
+		contentType:'application/json',
+		dataType:'json',
+		data:JSON.stringify(data),
+		url:'/board/update',
+		type:'POST',
+		success:function(){
+			alert("success");
+		},
+		error:function(error){
+			alert("error : "+error);
+		}
+		
+	});
+}
+
+
+/* $(document).ready(function(){
 			var formObj = $("form[name='readForm']");
 			
 			// 수정 
@@ -144,7 +163,7 @@ $(document).ready(function(){
 				location.href = "/board/";
 			})
 
-		})
+		}) */
 		
 
 </script>

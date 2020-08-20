@@ -25,4 +25,8 @@
 	
 	
 	
+	<!-- messageconverter pom.xml jackson databind 설정으로 대체-->
+
+	
+	
 </beans:beans>

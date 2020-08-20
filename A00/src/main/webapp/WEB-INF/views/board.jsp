@@ -11,6 +11,9 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 	<title>Home</title>
+	<meta charset="utf-8" />
+	
+
 </head>
 <body>
 
@@ -90,23 +93,23 @@
                                       <c:if test="${empty listB}">
                                       ${"데이터가 존재하지 않습니다."}
                                       </c:if>
-                           <!--            	<tr>
+                                      	<tr>
 											<td data-name="projectCode">
 											</td>
 											<td data-name="projectId">
-											    <input type="text" name='projectId'  class="form-control"/>
+											    <input type="text" id='projectId'  class="form-control"/>
 											</td>
 											<td data-name="projectName">
-											    <input type="text" name='projectName' class="form-control"/>
+											    <input type="text" id='projectName' class="form-control"/>
 											</td>
 					    					<td data-name="projectManager">
-											    <input type="text" name='projectManager' class="form-control"/>
+											    <input type="text" id='projectManager' class="form-control"/>
 											</td>
 											<td data-name="projectContractor">
-											    <input type="text" name='projectContractor'class="form-control"/>
+											    <input type="text" id='projectContractor'class="form-control"/>
 											</td>
 											<td data-name="projectArea">
-											    <select name="sel0">
+											    <select name="sel0" onchange=area(this.value)>
 					        				        <option value="----">분야</option>
 					    					        <option value="민간">민간</option>
 					        				        <option value="공공">공공</option>
@@ -114,30 +117,30 @@
 											    </select>
 											</td>
 											<td data-name="teamName">
-											    <input type="text" name='teamName' class="form-control"/>
+											    <input type="text" id='teamName' class="form-control"/>
 											</td>
 											<td data-name="startDate">
-											    <input type="text" name='startDate' class="form-control"/>
+											    <input type="text" id='startDate' class="form-control"/>
 											</td>
 											<td data-name="endDate">
-											    <input type="text" name='endDate' class="form-control"/>
+											    <input type="text" id='endDate' class="form-control"/>
 											</td>
 											<td data-name="expense">
-											    <input type="text" name='expense' class="form-control"/>
+											    <input type="text" id='expense' class="form-control"/>
 											</td>
 											<td data-name="outsourcingCost">
-											    <input type="text" name='outsourcingCost' class="form-control"/>
+											    <input type="text" id='outsourcingCost' class="form-control"/>
 											</td>
 											<td data-name="netSales">
-											    <input type="text" name='netSales' class="form-control"/>
+											    <input type="text" id='netSales' class="form-control"/>
 											</td>
 											<td data-name="sales">
-											    <input type="text" name='sales' class="form-control"/>
+											    <input type="text" id='sales' class="form-control"/>
 											</td>
 											<td data-name="goods">
-											    <input type="text" name='goods' class="form-control"/>
+											    <input type="text" id='goods' class="form-control"/>
 											</td>
-										</tr> -->
+										</tr>
                                     </tbody>
                                 </table>
                					<%--./table --%>
@@ -180,6 +183,10 @@
                     </div>
                     <div style="float:right;">
                     	<button id="insert" type ="button">입력</button>
+                    	
+                    	<button id="input" type ="button">저장</button>
+                    	<!-- 새로운 데이터 저장 버튼 -->
+                    	
                     	<!--  row에 데이터를 입력하고 저장하면 데이터 입력됨 -->
                     <!-- 	<button id="write" type ="button">//입력</button>
                     	입력버튼 누를떄마다 밑에 row하나씩 생김
@@ -190,7 +197,6 @@
             </div>
             </div>
         </section>
-        
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
