@@ -72,5 +72,14 @@
 	
 	</sql>
 	<!--projectName 검색 -->
+	
+	<select id="getBoardList" resultType="org.joohee.A00.VO.BoardVO">
+		SELECT *
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+		WHERE 1=1
+		
+	
+	</select>
 
 </mapper>

@@ -88,4 +88,19 @@ public class BoardServiceImpl implements BoardService{
 	}
 	//EXCEPTION적용안하면 오류나는 이유
 
+	
+	//ajax controller
+	@Override
+	public List<BoardMapper> getBoardList(BoardVO boardVO) {
+
+		return boardMapper.getBoardList(boardVO);
+	}
+
+	@Override
+	public BoardMapper getBoardDetail(BoardVO boardVO) {
+		
+
+		return null;
+	}
+
 }

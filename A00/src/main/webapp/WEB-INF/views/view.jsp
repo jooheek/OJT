@@ -109,23 +109,25 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
 
-
-function update(){
+//게시판 수정 POST
+function update(requestData,callback,error){
 	
 	var data = $("form").serialize();
 	console.log(data);
 
 	$.ajax({
-		contentType:'application/json',
+		contentType:'application/json;charset= utf-8',
 		dataType:'json',
 		data:JSON.stringify(data),
 		url:'/board/update',
 		type:'POST',
-		success:function(){
-			alert("success");
+		success:function(result,callback,xhr){
+			if(callback){
+				callback(result);
+			}
 		},
-		error:function(error){
-			alert("error : "+error);
+		error:function(xhr,status,er){
+			alert(status+"요청 전송중 오류발생");
 		}
 		
 	});

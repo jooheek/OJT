@@ -34,4 +34,7 @@ public interface BoardMapper {
 	
 	public int countBoardList(SearchCriteria scri)throws Exception;
 	
+	//ajax controller
+	public List<BoardMapper> getBoardList(BoardVO boardVO);
+	
 }

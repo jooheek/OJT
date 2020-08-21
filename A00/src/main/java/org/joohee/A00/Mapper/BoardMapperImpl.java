@@ -102,4 +102,12 @@ public class BoardMapperImpl implements BoardMapper{
 		
 		sqlSession.insert(insertF,vo);
 	}
+
+
+
+	@Override
+	public List<BoardMapper> getBoardList(BoardVO boardVO) {
+		
+		return sqlSession.selectList("BoardMapper.getBoardList");
+	}
 }
