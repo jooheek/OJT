@@ -177,7 +177,7 @@
                    </tbody>
               </table>
                <input type="hidden" id="projectCode" name="projectCode"  value="${projectCode}"/> 
-               <input type="hidden" id="searchType" name="searchType"  value="S"/>
+             <!--   <input type="hidden" id="searchType" name="searchType"  value="S"/> -->
                 <!-- 조회 -->
          </form>
          <div>

@@ -11,21 +11,18 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
-	<title>Home</title>
+	<title>게시글 목록</title>
 	<meta charset="utf-8" />
 <script type="text/javascript">
 
 	$(document).ready(function(){
 		getBoardList();
-		console.log(projectCode);
 	});
 
 	
 	//게시판 상세페이지로 이동
 	function goBoardDetail(projectCode){
 		location.href="/board/boardDetail?projectCode="+projectCode;
-
-		console.log(projectCode);
 	}	
 
 	//게시판 작성페이지로 이동

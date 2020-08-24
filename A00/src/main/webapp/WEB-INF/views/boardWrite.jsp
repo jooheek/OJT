@@ -35,7 +35,7 @@
 		if(yn){
 			$.ajax({
 				url		:"/board/insertBoard",
-				data	:$("#insertForm").serialize,
+				data	:$("#insertForm").serialize(),
 				dataType:"JSON",
 				cache	:false,
 				async	:true,

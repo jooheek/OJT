@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 수정</title>
+<title>게시글 수정</title>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <%
@@ -26,21 +26,24 @@
 
 	//게시판 상세조회
 	function getBoardDetail(projectCode){
+		
 		var projectCode = $("#projectCode").val();
 
-		if(projectCode !=""){
+		if(projectCode != ""){
+			
 			$.ajax({
 				url:"/board/getBoardDetail",
-				data:$("#boardForm").serialize();
+				data:$("#updateForm").serialize(),
 				dataType:"JSON",
 				cache:false,
 				async:true,
 				type:"POST",
-				success:function(){
+				success:function(obj){
 					getBoardDetailCallback(obj);
 				},
 				error:function(xhr,status,error){
 					alert("getBoardDetail error : "+error);
+					console.log(projectCode);
 				}
 			});
 		}else{
@@ -73,6 +76,8 @@
 			$("#projectName").val(projectName);
 			$("#startDate").val(startDate);
 			$("#endDate").val(endDate);
+
+			
 			/* $("#").val();
 			$("#").val();
 			$("#").val();
@@ -164,7 +169,7 @@
 <body>
 
 <div class="col-md-12 table-responsive">
-    	<form id="boardForm" name="boardForm">
+    	<form id="updateForm" name="updateForm">
                 <table class="table">
                          <thead>
                                <tr>
@@ -204,7 +209,7 @@
                   		 	</tbody>
               </table>
                <input type="hidden" id="projectCode" name="projectCode"  value="${projectCode}"/> 
-               <input type="hidden" id="searchType" name="searchType"  value="U"/>
+              <!--  <input type="hidden" id="searchType" name="searchType"  value="U"/> -->
                 <!-- 조회 -->
          </form>
          <div>
