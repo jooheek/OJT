@@ -6,9 +6,9 @@ package org.joohee.A00.Service;
 import java.util.List;
 import java.util.Map;
 
-import org.joohee.A00.Mapper.BoardMapper;
 import org.joohee.A00.VO.BoardVO;
 import org.joohee.A00.VO.SearchCriteria;
+import org.joohee.A00.dto.BoardDTO;
 import org.springframework.stereotype.Service;
 
 
@@ -31,8 +31,16 @@ public interface BoardService {
 	public void update(BoardVO vo)throws Exception;
 	
 	public int countBoardList(SearchCriteria scri)throws Exception;
+	
+	//ajax controller
 
-	public List<BoardMapper> getBoardList(BoardVO boardVO);
+	public List<BoardDTO> getBoardList(BoardVO boardVO);
 
-	public BoardMapper getBoardDetail(BoardVO boardVO);
+	public BoardDTO getBoardDetail(BoardVO boardVO);
+
+	public BoardDTO insertBoard(BoardVO boardVO);
+
+	public BoardDTO deleteBoard(BoardVO boardVO);
+
+	public BoardDTO updateBoard(BoardVO boardVO);
 }

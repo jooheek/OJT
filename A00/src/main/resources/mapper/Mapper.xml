@@ -15,7 +15,7 @@
 	</select>
 	<!-- ROWNUM 왜 안나오는지 확인  -->
 	
-	<select id="countBoardList" resultType="Integer">
+	<select id="countBoardList" resultType="Integer" >
 		SELECT COUNT(*)
 		FROM project P LEFT JOIN finance F
 		ON P.projectCode=F.projectCode
@@ -23,7 +23,6 @@
 		<include refid="search"></include>
 		
 	</select>
-	<!-- where 1=1 왜 하는건지 -->
 	
 	<select id="read" resultType="org.joohee.A00.VO.BoardVO">
 		SELECT *
@@ -73,13 +72,60 @@
 	</sql>
 	<!--projectName 검색 -->
 	
-	<select id="getBoardList" resultType="org.joohee.A00.VO.BoardVO">
+	
+	<!-- ajax controller -->
+	
+	
+	<select id="getBoardList" parameterType="org.joohee.A00.VO.BoardVO" resultType="org.joohee.A00.dto.BoardDTO">
 		SELECT *
 		FROM project P LEFT JOIN finance F
 		ON P.projectCode=F.projectCode
 		WHERE 1=1
-		
 	
 	</select>
 
+	<select id="getBoardDetail" parameterType="org.joohee.A00.VO.BoardVO" resultType="org.joohee.A00.dto.BoardDTO">
+		SELECT *
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+		WHERE P.projectCode =#{projectCode}
+	
+	</select>
+	
+	<insert id="insertBoard" parameterType="org.joohee.A00.VO.BoardVO">
+		INSERT INTO project(projectId,projectName,startDate,endDate,projectManager,projectContractor,projectArea,teamName)
+		VALUES(#{projectId},#{projectName},#{startDate},#{endDate},#{projectManager},#{projectContractor},#{projectArea},#{teamName})
+		
+	</insert>
+	<!--  transactional query로 만들어야함 -->
+	
+	<delete id="deleteBoard" parameterType="org.joohee.A00.VO.BoardVO">
+		DELETE 
+		FROM project
+		WHERE projectCode=#{projectCode}
+	
+	</delete>
+	
+	<!-- transactional query  on delete cascade 인데...-->
+	<!-- pagination -->	
+<!-- 	<select id="getBoardCnt" parameterType="org.joohee.A00.VO.BoardVO" resultType="int">
+		SELECT COUNT(*)
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+		WHERE 1=1
+	
+	</select> -->
+
+	
+	<update id="updateBoard" parameterType="org.joohee.A00.VO.BoardVO">
+		UPDATE project P INNER JOIN finance F
+			ON P.projectCODE = F.projectCode
+		SET P.projectId=#{projectId},P.projectName=#{projectName},P.startDate=#{startDate},P.endDate=#{endDate}
+		,P.projectManager=#{projectManager},P.projectContractor=#{projectContractor},P.projectArea=#{projectArea},P.teamName=#{teamName},
+		F.expense=#{expense},F.outsourcingCost=#{outsourcingCost},F.netSales=#{netSales},F.sales=#{sales},F.goods=#{goods}
+		WHERE P.projectCode=#{projectCode}
+		
+	
+	</update>
+	
 </mapper>

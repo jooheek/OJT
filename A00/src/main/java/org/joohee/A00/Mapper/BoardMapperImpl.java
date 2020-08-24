@@ -21,8 +21,8 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.joohee.A00.VO.BoardVO;
-import org.joohee.A00.VO.Criteria;
 import org.joohee.A00.VO.SearchCriteria;
+import org.joohee.A00.dto.BoardDTO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -104,10 +104,45 @@ public class BoardMapperImpl implements BoardMapper{
 	}
 
 
+	//ajaxcontroller
+	
+	@Override
+	public List<BoardDTO> getBoardList(BoardVO boardVO) {
+		
+		return sqlSession.selectList("BoardMapper.getBoardList",boardVO);
+	}
+
+
 
 	@Override
-	public List<BoardMapper> getBoardList(BoardVO boardVO) {
+	public BoardDTO getBoardDetail(BoardVO boardVO) {
 		
-		return sqlSession.selectList("BoardMapper.getBoardList");
+		return sqlSession.selectOne("BoardMapper.getBoardDetail",boardVO);
 	}
+
+
+
+	@Override
+	public int insertBoard(BoardVO boardVO) {
+
+		return sqlSession.insert("BoardMapper.insertBoard",boardVO);
+	}
+
+
+
+	@Override
+	public int deleteBoard(BoardVO boardVO) {
+
+		return sqlSession.delete("BoardMapper.deleteBoard",boardVO);
+	}
+
+
+
+	@Override
+	public int updateBoard(BoardVO boardVO) {
+		
+		return sqlSession.update("BoardMapper.updateBoard",boardVO);
+	}
+	
+	 
 }

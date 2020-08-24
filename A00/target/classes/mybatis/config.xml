@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<typeAliases>
 		<typeAlias alias ="BoardVO" type="org.joohee.A00.VO.BoardVO" ></typeAlias>
+		<typeAlias alias ="BoardDTO" type="org.joohee.A00.dto.BoardDTO" ></typeAlias>
 	</typeAliases>
 
 </configuration>

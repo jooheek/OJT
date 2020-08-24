@@ -8,8 +8,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.joohee.A00.VO.BoardVO;
-import org.joohee.A00.VO.Criteria;
 import org.joohee.A00.VO.SearchCriteria;
+import org.joohee.A00.dto.BoardDTO;
 
 /**
  * @author jooheek
@@ -35,6 +35,14 @@ public interface BoardMapper {
 	public int countBoardList(SearchCriteria scri)throws Exception;
 	
 	//ajax controller
-	public List<BoardMapper> getBoardList(BoardVO boardVO);
+	public List<BoardDTO> getBoardList(BoardVO boardVO);
+
+	public BoardDTO getBoardDetail(BoardVO boardVO);
+
+	public int insertBoard(BoardVO boardVO);
+
+	public int deleteBoard(BoardVO boardVO);
+
+	public int updateBoard(BoardVO boardVO);
 	
 }

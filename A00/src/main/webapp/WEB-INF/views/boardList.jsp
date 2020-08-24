@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%-- <%@ taglib uri=" http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
 <%@ page session="false" %>
@@ -16,12 +17,29 @@
 
 	$(document).ready(function(){
 		getBoardList();
+		console.log(projectCode);
 	});
 
+	
+	//게시판 상세페이지로 이동
+	function goBoardDetail(projectCode){
+		location.href="/board/boardDetail?projectCode="+projectCode;
+
+		console.log(projectCode);
+	}	
+
+	//게시판 작성페이지로 이동
+	function goBoardWrite(){
+		location.href="/board/boardWrite";
+	}
+	//게시판 목록 조회
 	function getBoardList(){
 		$.ajax({
-			type:"GET",
+			
 			url:"/board/getBoardList",
+			data:$("#boardForm").serialize(),
+			async:true,
+			type:"POST",
 			dataType:"JSON",
 			success:function(obj){
 				getBoardListCallback(obj);
@@ -31,15 +49,12 @@
 			}
 		});
 	}
-
+	//게시판 목록 데이터 불러오기
 	function getBoardListCallback(obj){
 
 		var list = obj;
 		var listLength = obj.length;
 		
-		console.log(list);
-		console.log(listLength);
-
 		var str="";
 
 		if(listLength > 0){
@@ -59,9 +74,9 @@
 				var sales = list[i].sales;
 				var goods = list[i].goods;
 
-				str +="<tr><td></td>";
+				str +="<tr><td>"+projectCode+"</td>";
                 str +="<td>"+projectId+"</td>";
-                str +="<td>"+projectName+"</td>";
+                str +="<td onclick ='javascript:goBoardDetail("+projectCode+");' style='cursor:Pointer'>"+projectName+"</td>";
                 str +="<td>"+startDate+"</td>";
                 str +="<td>"+endDate+"</td>";
                 str +="<td>"+projectManager+"</td>";
@@ -77,8 +92,8 @@
 			}
 				
 		}else{
-			str +="<tr colspan='13'>";
-			str +="<td>글이 등록되지 않았습니다.</td>";
+			str +="<tr>";
+			str +="<td colspan='13'>글이 등록되지 않았습니다.</td>";
 			str +="</tr>";		
 		}
 		$("#tbody").html(str);
@@ -91,22 +106,21 @@
 
 <%-- ${getList} --%>
 
-<section id="tabs" class="project-tab">
             <div class="container">
                 <div class="row">
                     <div><%--class="col-md-12" --%>
-                        <nav>
+                        <!-- <nav>
                             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">프로젝트별</a>
                                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">팀별 </a>
                                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">개인 별</a>
                             </div>
-                        </nav>
+                        </nav> -->
                        
                         <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-								 <div class="pull-right" style="margin:10px;">
-									<%-- <label class="control-label" style="float:left;">프로젝트 명 :</label>
+                            <div class="tab-pane fade show active" id="nav-home" >
+								<%--  <div class="pull-right" style="margin:10px;">
+									 <label class="control-label" style="float:left;">프로젝트 명 :</label>
 										<div class="pull-right" style="width:200px;float:right;" >
 											<c:if test="${!empty listB}">
 												<select id="selectBox" name='projectName' class="form-control">
@@ -115,101 +129,49 @@
 													</c:forEach>
 												</select>
 											</c:if>
-										</div> --%>
+										</div> 
 									<!-- /.select -->
-								</div>
+								</div> --%>
+								<form id="boardForm" name="boardForm">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>projectId</th>
-                                            <th>projectName</th>
-                                            <th>projectManager</th>
-                                            <th>projectContractor</th>
-                                            <th>projectArea</th>
-                                            <th>teamName</th>
-                                            <th>startDate</th>
-                                            <th>endDate</th>
-                                            <th>expense</th>
-                                            <th>outsourcingCost</th>
-                                            <th>netSales</th>
-                                            <th>sales</th>
-                                            <th>goods</th>
-                                        </tr>
+											<th>코드</th>
+					                        <th>프로젝트 아이디</th>
+					                        <th>프로젝트 명</th>
+					                        <th>프로젝트 매니저</th>
+					                        <th>계약사</th>
+					                        <th>분야</th>
+					                        <th>팀 이름</th>
+					                        <th>시작 일자</th>
+					                        <th>마감 일자</th>
+					                        <th>비용</th>
+					                        <th>외주비</th>
+					                        <th>순 매출</th>
+					                        <th>매출</th>
+					                        <th>상품비</th>
+					                     </tr>
                                     </thead>
                                     <tbody id="tbody">
 
                                     </tbody>
                                 </table>
-               					<%-- 
-               					<div class="search" style="width:400px;position:absolute;left:50%;">
-               						<select name="searchType">
-               							<option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
-     									<option value="N"<c:out value="${scri.searchType eq 'N' ? 'selected' : ''}"/>>프로젝트 명</option>
-               						</select>
-								  <input type="text" name="keyword" id="keywordInput" value="${scri.keyword }">
-								  <button class="btn btn-secondary" type="button" id="searchBtn">검색</button>
-							
-								</div>
-                            	./search form
-	                            <nav aria-label="Page navigation example">
-								  <ul class="pagination">
-								  
-								  <c:if test="${pageMaker.prev}">
-								    <li class="page-item">
-								      <a class="page-link" href='<c:url value="/board${pageMaker.makeSearch(pageMaker.startPage-1) }"/>' aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">prev</span></a>
-								    </li>
-								   </c:if>
-								   
-								    <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
-									    <li class="page-item">
-									        <a class="page-link" href='<c:url value="/board${pageMaker.makeSearch(pageNum) }"/>'><i class="fa">${pageNum }</i></a>
-									    </li>
-									</c:forEach>
-								    
-								   <c:if test="${pageMaker.next && pageMaker.endPage >0 }">
-								    <li class="page-item">
-								      <a class="page-link" href='<c:url value="/board${pageMaker.makeSearch(pageMaker.endPage+1) }"/>' aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">next</span></a>
-								    </li>
-								   </c:if>
-								   
-								  </ul>
-								</nav> --%>
+               					</form>
 							<%--./pagination --%>
                         </div>
                     </div>
                     <div style="float:right;">
-                    	<button id="insert" type ="button">입력</button>
-                    	
-                    	<button id="input" type ="button">저장</button>
-                    	<!-- 새로운 데이터 저장 버튼 -->
-                    	
-                    	<!--  row에 데이터를 입력하고 저장하면 데이터 입력됨 -->
-                    <!-- 	<button id="write" type ="button">//입력</button>
-                    	입력버튼 누를떄마다 밑에 row하나씩 생김
-                    	<button id ="update" type="button">수정</button>
-                    	projectName클릭하면 input text가 생기고 수정가능 -->
+                    	<button id="input" type ="button" onclick="javascript:goBoardWrite();">작성하기</button>
                    	</div>
                 </div>
             </div>
             </div>
-        </section>
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>     
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#insert").on("click",function(){
-		location.href="writeView";
-		
-	});
 
-	$('#searchBtn').on("click",function(){
-		self.location="board"+'${pageMaker.makeQuery(1)}'+"&searchType="+$('select option:selected').val()+"&keyword="+encodeURIComponent($('#keywordInput').val());
-		console.log($('select option:selected').val())
-	});	
-})
 </script>
    
 </body>
