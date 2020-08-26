@@ -35,7 +35,7 @@ public interface BoardService {
 	//ajax controller
 
 	public List<BoardDTO> getBoardList(BoardVO boardVO);
-
+	
 	public BoardDTO getBoardDetail(BoardVO boardVO);
 
 	public BoardDTO insertBoard(BoardVO boardVO);
@@ -43,4 +43,7 @@ public interface BoardService {
 	public BoardDTO deleteBoard(BoardVO boardVO);
 
 	public BoardDTO updateBoard(BoardVO boardVO);
+	
+	public int getBoardCnt()throws Exception;
+	
 }

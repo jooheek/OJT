@@ -6,14 +6,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="UTF-8">
 <title>게시글 수정</title>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <%
 	 String projectCode = request.getParameter("projectCode");
 %>
 <c:set var = "projectCode" value="<%=projectCode %>"/>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<style>
+	th{
+		text-align:center;
+		font-size: 85%;
+	}
+
+
+</style>
+
 <script>
 	$(document).ready(function(){
 		getBoardDetail();
@@ -24,33 +33,32 @@
 		location.href="/board/boardList";
 	}
 
-	//게시판 상세조회
+	//게시글 상세 조회 
 	function getBoardDetail(projectCode){
-		
+
 		var projectCode = $("#projectCode").val();
 
 		if(projectCode != ""){
-			
+
 			$.ajax({
-				url:"/board/getBoardDetail",
-				data:$("#updateForm").serialize(),
+				url		: "/board/getBoardDetail",
+				data	:$("#boardForm").serialize(),
 				dataType:"JSON",
-				cache:false,
-				async:true,
-				type:"POST",
-				success:function(obj){
+				cache	:false,
+				async	:true,
+				type	:"POST",
+				success :function(obj){
 					getBoardDetailCallback(obj);
 				},
-				error:function(xhr,status,error){
-					alert("getBoardDetail error : "+error);
-					console.log(projectCode);
+				error	:function(xhr,status,err){
+					alert("getBoardDetail 오류 발생 "+err)
 				}
 			});
+			
 		}else{
-			alert("오류 발생");
-		}
+			alert("오류발생")};
 	}
-
+	
 
 	function getBoardDetailCallback(obj){
 		var str ="";
@@ -60,31 +68,22 @@
 			var projectCode = obj.projectCode;
 			var projectId = obj.projectId;
 			var projectName = obj.projectName;
-			var startDate = obj.startDate;
-			var endDate = obj.endDate;
 			var projectManager = obj.projectManager;
 			var projectContractor = obj.projectContractor;
 			var projectArea = obj.projectArea;
 			var teamName = obj.teamName;
-			var expense = obj.expense;
-			var outsourcingCost = obj.outsourcingCost;
-			var netSales = obj.netSales;
-			var sales = obj.sales;
-			var goods = obj.goods;
+			var startDate = obj.startDate;
+			var endDate = obj.endDate;
+			var expense = obj.expense.toLocaleString();
+			var outsourcingCost = obj.outsourcingCost.toLocaleString();
+			var netSales = obj.netSales.toLocaleString();
+			var sales = obj.sales.toLocaleString();
+			var goods = obj.goods.toLocaleString();
 
-			$("#projectId").val(projectId);
-			$("#projectName").val(projectName);
-			$("#startDate").val(startDate);
-			$("#endDate").val(endDate);
-
-			
-			/* $("#").val();
-			$("#").val();
-			$("#").val();
-			$("#").val();
-			$("#").val();
-			$("#").val();
-			$("#").val(); */
+			$('#projectId').val(projectId);
+			$('#projectName').val(projectName);
+			$('#startDate').val(startDate);
+			$('#endDate').val(endDate);
 
 		}else{
 			alert("등록된 글이 존재하지 않습니다.");
@@ -169,7 +168,7 @@
 <body>
 
 <div class="col-md-12 table-responsive">
-    	<form id="updateForm" name="updateForm">
+    	<form id="boardForm" name="boardForm">
                 <table class="table">
                          <thead>
                                <tr>
@@ -198,8 +197,8 @@
 									<td id="projectContractor"></td>
 									<td id="projectArea"></td>
 									<td id="teamName"></td>
-									<td><input type="text" name='startDate' id='startDate'  value=""/></td>
-									<td><input type="text" name='endDate' id='endDate'  value=""/></td>
+									<td><input type="date" name='startDate' id='startDate'  value=""/></td>
+									<td><input type="date" name='endDate' id='endDate'  value=""/></td>
 									<td id="expense"></td>
 									<td id="outsourcingCost"></td>
 									<td id="netSales"></td>
@@ -213,8 +212,8 @@
                 <!-- 조회 -->
          </form>
          <div>
-         	<button type="button" onclick="javascript:goBoardList();">목록으로</button>
-         	<button type="button" onclick="javascript:updateBoard();">수정하기</button>
+         	<button type="button" onclick="javascript:goBoardList();"class="btn btn-secondary btn-sm">목록으로</button>
+         	<button type="button" onclick="javascript:updateBoard();" class="btn btn-primary btn-sm">수정하기</button>
          </div>
 </div>
 

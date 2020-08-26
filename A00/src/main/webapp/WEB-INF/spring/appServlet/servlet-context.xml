@@ -23,8 +23,6 @@
 	
 	<context:component-scan base-package="org.joohee.A00" />  
 	
-	
-	
 	<!-- messageconverter pom.xml jackson databind 설정으로 대체-->
 
 	

@@ -109,17 +109,21 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	//게시글 등록
+	@Transactional
 	@Override 
 	public BoardDTO insertBoard(BoardVO boardVO) {
 		
 		BoardDTO boardDTO = new BoardDTO();
 		
-		int insertCnt = boardMapper.insertBoard(boardVO);
-		if(insertCnt>0) {
+		
+		int insertPCnt = boardMapper.insertBoardP(boardVO);
+		int insertFCnt = boardMapper.insertBoardF(boardVO);
+		if(insertPCnt > 0 ||insertFCnt > 0) {
 			boardDTO.setResult("success");
 		}else {
 			boardDTO.setResult("fail");
 		}
+		
 	
 		return boardDTO;
 	}
@@ -131,9 +135,10 @@ public class BoardServiceImpl implements BoardService{
 		
 		BoardDTO boardDTO = new BoardDTO();
 		
-		int deletCnt = boardMapper.deleteBoard(boardVO);
+		int deletCntP= boardMapper.deleteBoardP(boardVO);
+		int deletCntF = boardMapper.deleteBoardF(boardVO);
 		
-		if(deletCnt >0) {
+		if(deletCntP >0 ||deletCntF >0) {
 			boardDTO.setResult("success");
 		}else {
 			boardDTO.setResult("fail");
@@ -147,9 +152,10 @@ public class BoardServiceImpl implements BoardService{
 		
 		BoardDTO boardDTO = new BoardDTO();
 		
-		int updateCnt = boardMapper.updateBoard(boardVO);
+		int updateCntP = boardMapper.updateBoardP(boardVO);
+		int updateCntF = boardMapper.updateBoardF(boardVO);
 		
-		if(updateCnt >0) {
+		if(updateCntP >0 ||updateCntF >0) {
 			boardDTO.setResult("success");
 		}else {
 			boardDTO.setResult("fail");
@@ -157,6 +163,13 @@ public class BoardServiceImpl implements BoardService{
 		
 		return boardDTO;
 	}
+
+	@Override
+	public int getBoardCnt() throws Exception {
+
+		return boardMapper.getBoardCnt();
+	}
+
 	 
 
 }

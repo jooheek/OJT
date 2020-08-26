@@ -15,6 +15,7 @@ import org.joohee.A00.dto.BoardDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,19 +35,23 @@ public class AjaxController {
 	// 게시판 목록페이지 이동
 	@RequestMapping(value = "/boardList")
 	public String getBoardList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+		
 		return "boardList";
 	}
+	
+
 
 	// 게시판 목록 조회
 	@RequestMapping(value = "/getBoardList")
 	@ResponseBody
 	public List<BoardDTO> getboardList(HttpServletRequest request, HttpServletResponse response, BoardVO boardVO)throws Exception {
-
+		
+		logger.info(boardVO.toString());
 		List<BoardDTO> boardDtoList = boardService.getBoardList(boardVO);
 		
 		return boardDtoList;
 	}
+	//ajax는 무조건 데이터를 객체로 받는다. 
 
 	// 게시판 상세페이지 이동
 	@RequestMapping(value = "/boardDetail")
@@ -76,12 +81,15 @@ public class AjaxController {
 	 //게시글 등록
 	 @RequestMapping(value="/insertBoard")
 	 @ResponseBody 
-	 public BoardDTO insertBoard(HttpServletRequest request,HttpServletResponse response,BoardVO boardVO)throws Exception {
+	 public BoardDTO insertBoard(HttpServletRequest request,HttpServletResponse response, BoardVO boardVO)throws Exception {
 	  
+		 logger.debug(boardVO.toString());
 		 BoardDTO boardDTO = boardService.insertBoard(boardVO);
 	  
 		 return boardDTO;
 	 }
+	 //requestbody boardvo 사용해서 데이터 넘길것
+	 
 	 //게시글 삭제
 	 @RequestMapping(value="/deleteBoard")
 	 @ResponseBody
@@ -95,7 +103,7 @@ public class AjaxController {
 	 //게시판 수정 페이지로 이동
 	 @RequestMapping(value="/boardUpdate")
 	 public String boardUpdate(HttpServletRequest request, HttpServletResponse response)throws Exception{
-	
+
 		 return "boardUpdate";
 	 }
 	 

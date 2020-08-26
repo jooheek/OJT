@@ -9,6 +9,14 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <title>게시글 상세</title>
+<style>
+	th{
+		text-align:center;
+		font-size: 85%;
+	}
+
+
+</style>
 <% 
 	String projectCode = request.getParameter("projectCode");
 %>
@@ -38,16 +46,16 @@
 		if(projectCode != ""){
 
 			$.ajax({
-				url: "/board/getBoardDetail",
-				data:$("#boardForm").serialize(),
+				url		: "/board/getBoardDetail",
+				data	:$("#boardForm").serialize(),
 				dataType:"JSON",
-				cache:false,
-				async:true,
-				type:"POST",
-				success:function(obj){
+				cache	:false,
+				async	:true,
+				type	:"POST",
+				success :function(obj){
 					getBoardDetailCallback(obj);
 				},
-				error:function(xhr,status,err){
+				error	:function(xhr,status,err){
 					alert("getBoardDetail 오류 발생 "+err)
 				}
 			});
@@ -72,11 +80,11 @@
 			var projectContractor = obj.projectContractor;
 			var projectArea = obj.projectArea;
 			var teamName = obj.teamName;
-			var expense = obj.expense;
-			var outsourcingCost = obj.outsourcingCost;
-			var netSales = obj.netSales;
-			var sales = obj.sales;
-			var goods = obj.goods;
+			var expense = obj.expense.toLocaleString();
+			var outsourcingCost = obj.outsourcingCost.toLocaleString();
+			var netSales = obj.netSales.toLocaleString();
+			var sales = obj.sales.toLocaleString();
+			var goods = obj.goods.toLocaleString();
 
 			str +="<tr><td>"+projectCode+"</td>";
             str +="<td>"+projectId+"</td>";
@@ -111,16 +119,16 @@
 		if(yn){
 
 			$.ajax({
-				url: "/board/deleteBoard",
-				data:$("#boardForm").serialize(),
+				url		: "/board/deleteBoard",
+				data	:$("#boardForm").serialize(),
 				dataType:"JSON",
-				cache:false,
-				async:true,
-				type:"POST",
-				success:function(obj){
+				cache	:false,
+				async	:true,
+				type	:"POST",
+				success :function(obj){
 					deleteBoardCallback(obj);
 				},
-				error:function(xhr,status,err){
+				error	:function(xhr,status,err){
 					alert("error : "+err);
 				}
 			});
@@ -151,25 +159,25 @@
 </head>
 <body>
 
-<div class="col-md-12 table-responsive">
+<div class="col-md-12">
     	<form id="boardForm" name="boardForm">
                 <table class="table" width="80%">
                          <thead>
                                <tr>
-		 						<th>코드</th>
-		                        <th>프로젝트 아이디</th>
-		                        <th>프로젝트 명</th>
-		                        <th>프로젝트 매니저</th>
-		                        <th>계약사</th>
-		                        <th>분야</th>
-		                        <th>팀 이름</th>
-		                        <th>시작 일자</th>
-		                        <th>마감 일자</th>
-		                        <th>비용</th>
-		                        <th>외주비</th>
-		                        <th>순 매출</th>
-		                        <th>매출</th>
-		                        <th>상품비</th>
+			 						<th>코드</th>
+			                        <th>프로젝트 아이디</th>
+			                        <th>프로젝트 명</th>
+			                        <th>프로젝트 매니저</th>
+			                        <th>계약사</th>
+			                        <th>분야</th>
+			                        <th>팀 이름</th>
+			                        <th>시작 일자</th>
+			                        <th>마감 일자</th>
+			                        <th>비용</th>
+			                        <th>외주비</th>
+			                        <th>순 매출</th>
+			                        <th>매출</th>
+			                        <th>상품비</th>
                                 </tr>
                             </thead>
                    <tbody id="tbody">
@@ -181,9 +189,9 @@
                 <!-- 조회 -->
          </form>
          <div>
-         	<button type="button" onclick="javascript:goBoardList();">목록으로</button>
-         	<button type="button" onclick="javascript:goBoardUpdate();">수정하기</button>
-         	<button type="button" onclick="javascript:deleteBoard();">삭제하기</button>
+         	<button type="button" onclick="javascript:goBoardList();" class="btn btn-secondary btn-sm">목록으로</button>
+         	<button type="button" onclick="javascript:goBoardUpdate();" class="btn btn-primary btn-sm">수정하기</button>
+         	<button type="button" onclick="javascript:deleteBoard();" class="btn btn-dark btn-sm">삭제하기</button>
          </div>
 </div>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>

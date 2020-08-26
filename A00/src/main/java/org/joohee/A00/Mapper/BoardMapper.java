@@ -39,10 +39,18 @@ public interface BoardMapper {
 
 	public BoardDTO getBoardDetail(BoardVO boardVO);
 
-	public int insertBoard(BoardVO boardVO);
+	public int insertBoardP(BoardVO boardVO);
+	
+	public  int insertBoardF(BoardVO boardVO);			
 
-	public int deleteBoard(BoardVO boardVO);
+	public int deleteBoardP(BoardVO boardVO);
+	
+	public int deleteBoardF(BoardVO boardVO);
 
-	public int updateBoard(BoardVO boardVO);
+	public int updateBoardP(BoardVO boardVO);
+	
+	public int updateBoardF(BoardVO boardVO);
+	
+	public int getBoardCnt()throws Exception;
 	
 }
