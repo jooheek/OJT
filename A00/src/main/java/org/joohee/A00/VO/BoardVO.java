@@ -40,7 +40,6 @@ public class BoardVO {
 	private int netSales;
 	private int sales;
 	private int goods;
-	private String searchType;
 	
 	
 	
@@ -138,15 +137,4 @@ public class BoardVO {
 				+ ", expense=" + expense + ", outsourcingCost=" + outsourcingCost + ", netSales=" + netSales
 				+ ", sales=" + sales + ", goods=" + goods + "]";
 	}
-	public String getSearchType() {
-		return searchType;
-	}
-	public void setSearchType(String searchType) {
-		this.searchType = searchType;
-	}
-	
-	
-	
-	
-	
 }

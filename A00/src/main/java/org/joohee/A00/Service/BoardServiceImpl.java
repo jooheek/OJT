@@ -109,28 +109,28 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	//게시글 등록
+	
+	@Override
 	@Transactional
-	@Override 
 	public BoardDTO insertBoard(BoardVO boardVO) {
 		
 		BoardDTO boardDTO = new BoardDTO();
 		
-		
-		int insertPCnt = boardMapper.insertBoardP(boardVO);
-		int insertFCnt = boardMapper.insertBoardF(boardVO);
-		if(insertPCnt > 0 ||insertFCnt > 0) {
+		int insertCntP = boardMapper.insertBoardP(boardVO);
+		int insertCntF = boardMapper.insertBoardF(boardVO);
+
+		if(insertCntP > 0 && insertCntF > 0) {
 			boardDTO.setResult("success");
 		}else {
 			boardDTO.setResult("fail");
 		}
-		
-	
 		return boardDTO;
 	}
 	//int type을 반환해야하기 떄문에 insertCount를 매긴다
 	
 	//게시글 삭제
 	@Override
+	@Transactional
 	public BoardDTO deleteBoard(BoardVO boardVO) {
 		
 		BoardDTO boardDTO = new BoardDTO();
@@ -138,7 +138,7 @@ public class BoardServiceImpl implements BoardService{
 		int deletCntP= boardMapper.deleteBoardP(boardVO);
 		int deletCntF = boardMapper.deleteBoardF(boardVO);
 		
-		if(deletCntP >0 ||deletCntF >0) {
+		if(deletCntP >0 && deletCntF >0) {
 			boardDTO.setResult("success");
 		}else {
 			boardDTO.setResult("fail");
@@ -148,6 +148,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	@Transactional
 	public BoardDTO updateBoard(BoardVO boardVO) {
 		
 		BoardDTO boardDTO = new BoardDTO();
@@ -155,7 +156,7 @@ public class BoardServiceImpl implements BoardService{
 		int updateCntP = boardMapper.updateBoardP(boardVO);
 		int updateCntF = boardMapper.updateBoardF(boardVO);
 		
-		if(updateCntP >0 ||updateCntF >0) {
+		if(updateCntP >0  && updateCntF >0) {
 			boardDTO.setResult("success");
 		}else {
 			boardDTO.setResult("fail");

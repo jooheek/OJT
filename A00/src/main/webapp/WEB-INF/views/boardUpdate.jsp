@@ -17,9 +17,24 @@
 <style>
 	th{
 		text-align:center;
-		font-size: 85%;
+		font-size: 13px;
+		/* width:20%; */
 	}
-
+    td{
+    	text-align:center;
+    }
+    #num{
+    	text-align:right;
+    }
+    input{
+    	width:70px;
+    }
+    #startDate,#endDate{
+    	width:135px;
+    }
+    select{
+    	height:30px;
+    }
 
 </style>
 
@@ -38,7 +53,7 @@
 
 		var projectCode = $("#projectCode").val();
 
-		if(projectCode != ""){
+		if(projectCode != null){
 
 			$.ajax({
 				url		: "/board/getBoardDetail",
@@ -80,15 +95,27 @@
 			var sales = obj.sales.toLocaleString();
 			var goods = obj.goods.toLocaleString();
 
-			$('#projectId').val(projectId);
-			$('#projectName').val(projectName);
-			$('#startDate').val(startDate);
-			$('#endDate').val(endDate);
+
+           $("#projectCode").text(projectCode);
+            $("#projectId").val(projectId);            
+            $("#projectName").val(projectName);
+            $("#projectManager").text(projectManager);
+            $("#projectContractor").text(projectContractor);
+            $("#projectArea").text(projectArea);
+            $("#teamName").text(teamName);
+            $("#startDate").val(startDate);
+            $("#endDate").val(endDate);
+            $("#expense").text(expense);
+            $("#outsourcingCost").text(outsourcingCost);
+            $("#netSales").text(netSales);
+            $("#sales").text(sales);
+            $("#goods").text(goods); 
 
 		}else{
 			alert("등록된 글이 존재하지 않습니다.");
 			return;
 		}
+		
 	}
 
 	//게시글 수정
@@ -97,7 +124,17 @@
 		var projectName =$("#projectName").val();
 		var startDate =$("#startDate").val();
 		var endDate =$("#endDate").val();
-
+		/*  $("#projectCode").text(projectCode);
+         $("#projectManager").text(projectManager);
+         $("#projectContractor").text(projectContractor);
+         $("#projectArea").text(projectArea);
+         $("#teamName").text(teamName);
+         $("#expense").text(expense);
+         $("#outsourcingCost").text(outsourcingCost);
+         $("#netSales").text(netSales);
+         $("#sales").text(sales);
+         $("#goods").text(goods); 
+          */
 		if(projectId == ""){
 			alert("프로젝트 아이디를 입력해주세요");
 			$("#projectId").focus();
@@ -189,25 +226,26 @@
                                 </tr>
                             </thead>
                    			<tbody id="tbody">
-								<tr>
-									<td id="projectCode"></td>
-									<td><input type="text" name='projectId' id='projectId'  value=""/></td>
-									<td><input type="text" name='projectName' id='projectName'  value=""/></td>
-									<td id="projectManager"></td>
-									<td id="projectContractor"></td>
-									<td id="projectArea"></td>
-									<td id="teamName"></td>
-									<td><input type="date" name='startDate' id='startDate'  value=""/></td>
-									<td><input type="date" name='endDate' id='endDate'  value=""/></td>
-									<td id="expense"></td>
-									<td id="outsourcingCost"></td>
-									<td id="netSales"></td>
-									<td id="sales"></td>
-									<td id="goods"></td>	
+							 	<tr>
+									<td id='projectCode'></td>
+									<td><input type='text' name='projectId' id='projectId'  value=''/></td>
+									<td><input type='text' name='projectName' id='projectName'  value=''/></td>
+									<td id='projectManager'></td>
+									<td id='projectContractor'></td>
+									<td id='projectArea'></td>
+									<td id='teamName'></td>
+									<td><input type='date' name='startDate' id='startDate'  value=''/></td>
+									<td><input type='date' name='endDate' id='endDate'  value=''/></td>
+									<td id='expense'></td>
+									<td id='outsourcingCost'></td>
+									<td id='netSales'></td>
+									<td id='sales'></td>
+									<td id='goods'></td>	
 								</tr>
+							
                   		 	</tbody>
               </table>
-               <input type="hidden" id="projectCode" name="projectCode"  value="${projectCode}"/> 
+               <input type="hidden" id="projectCode" name="projectCode"  value="${projectCode}"/>
               <!--  <input type="hidden" id="searchType" name="searchType"  value="U"/> -->
                 <!-- 조회 -->
          </form>

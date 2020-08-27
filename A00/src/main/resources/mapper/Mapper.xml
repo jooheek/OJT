@@ -81,11 +81,13 @@
 		FROM project P LEFT JOIN finance F
 		ON P.projectCode=F.projectCode
 		WHERE 1=1
+		ORDER BY p.projectCode asc
 	
 	</select>
 
 	<select id="getBoardDetail" parameterType="org.joohee.A00.VO.BoardVO" resultType="org.joohee.A00.dto.BoardDTO">
-		SELECT *
+		SELECT P.projectCode,P.projectId,P.projectName,P.startDate,P.endDate,P.projectManager,P.projectContractor,P.projectArea,P.teamName,
+				F.expense,F.outsourcingCost,F.netSales,F.sales,F.goods
 		FROM project P LEFT JOIN finance F
 		ON P.projectCode=F.projectCode
 		WHERE P.projectCode =#{projectCode}
@@ -131,8 +133,8 @@
 	
 	<update id="updateBoardP" parameterType="org.joohee.A00.VO.BoardVO"  useGeneratedKeys="true" keyProperty="projectCode">
 		UPDATE project
-		SET projectId=#{projectId},projectName=#{projectName},startDate=#{startDate},endDate=#{endDate},
-			projectManager=#{projectManager},projectContractor=#{projectContractor},projectArea=#{projectArea},teamName=#{teamName}
+		SET projectId=#{projectId},projectName=#{projectName},startDate=#{startDate},endDate=#{endDate}
+			<!-- projectManager=#{projectManager},projectContractor=#{projectContractor},projectArea=#{projectArea},teamName=#{teamName} -->
 		
 		WHERE projectCode =#{projectCode};
 	

@@ -52,6 +52,7 @@
 		var sales = $('#sales').val();
 		var goods = $('#goods').val();
 
+		
 	/* 	if(projectId == ""){
 			alert("프로젝트 아이디를 입력해주세요");
 			$("#projectId").focus();
@@ -101,6 +102,7 @@
 	
 	//작성 콜백함수
 	function insertBoardCallback(obj){
+
 		if(obj != null){
 			var result = obj.result;
 
@@ -159,7 +161,7 @@
 							   <input type="text" name='projectContractor' id='projectContractor' value=""/>
 							</td>
 							<td>
-							   <select id="projectArea">
+							   <select id="projectArea" name='projectArea'>
 						        <option value="----">분야</option>
 						     	<option value="민간">민간</option>
 						        <option value="공공">공공</option>
@@ -173,22 +175,22 @@
 							   <input type='date' name='startDate' id='startDate' value=""/>
 							</td>
 							<td id="endDate">
-							   <input type="date" id='endDate' value=""/>
+							   <input type="date"  name='endDate' id='endDate' value=""/>
 							</td>
 							<td id="expense">
-							   <input type="text" id='expense' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							   <input type="text" name='expense' id='expense' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
 							</td>
 							<td id="outsourcingCost">
-							   <input type="text" id='outsourcingCost' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							   <input type="text" name='outsourcingCost' id='outsourcingCost' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
 							</td>
 							<td id="netSales">
-							   <input type="text" id='netSales'oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							   <input type="text" name='netSales' id='netSales'oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
 							</td>
 							<td id="sales">
-							  <input type="text" id='sales'oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							  <input type="text" name='sales' id='sales'oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
 							</td>
 							<td id="goods">
-							   <input type="text" id='goods' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							   <input type="text" name='goods' id='goods' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
 							</td>
 						</tr>
 					</tbody>

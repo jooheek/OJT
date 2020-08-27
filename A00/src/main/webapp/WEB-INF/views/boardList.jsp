@@ -14,15 +14,16 @@
 	th{
 		text-align:center;
 		font-size: 13px;
-		/* width:20%; */
-		
 	}
-  td{
+	
+  	td{
     	text-align:center;
     }
+    
     #date{
     	width:15%;
     }
+    
      #num{
    		text-align:right;
     }
@@ -76,8 +77,8 @@
 				var projectName = list[i].projectName;
 				var projectManager = list[i].projectManager;
 				var projectContractor = list[i].projectContractor;
-				var teamName = list[i].teamName;
 				var projectArea = list[i].projectArea;
+				var teamName = list[i].teamName;
 				var startDate = list[i].startDate;
 				var endDate = list[i].endDate;
 				var expense = list[i].expense.toLocaleString();
@@ -89,13 +90,12 @@
 
 
 				str +="<tr><td>"+projectCode+"</td>";
-				str +="<td>"+projectCode+"</td>";
                 str +="<td>"+projectId+"</td>";
                 str +="<td onclick ='javascript:goBoardDetail("+projectCode+");' style='cursor:Pointer'>"+projectName+"</td>";
                 str +="<td >"+projectManager+"</td>";
                 str +="<td >"+projectContractor+"</td>";
-                str +="<td>"+teamName+"</td>";
                 str +="<td>"+projectArea+"</td>";
+                str +="<td>"+teamName+"</td>";
                 str +="<td id='date'>"+startDate+"</td>";
                 str +="<td id='date'>"+endDate+"</td>";
                 str +="<td id='num'>"+expense+"</td>";
@@ -114,6 +114,12 @@
 		$("#tbody").html(str);
 	}
 
+
+	/*
+	페이지 rownum 1부터 10까지 쭉 나열할것???
+	
+	
+	*/
 
 
     /*

@@ -14,9 +14,9 @@
 	<!-- MariaDB -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="org.mariadb.jdbc.Driver"/>
-        <property name="url" value="jdbc:mariadb://10.112.58.186:3306/pms"></property>
-        <property name="username" value="pms"/>
-        <property name="password" value="pms123!@#"/>
+        <property name="url" value="jdbc:mariadb://127.0.0.1:3306/pms"></property>
+        <property name="username" value="root"/>
+        <property name="password" value="admin"/>
     </bean>
     
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -35,8 +35,4 @@
     <!-- dao를 빈으로 등록할수 있게 context:component추가 -->
     
     
-    <!-- jsonview설정 -->
-   <!--  <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
-	    <property name="contentType" value="application/json;charset=UTF-8"> </property>
-	</bean> -->
 </beans>
