@@ -37,7 +37,7 @@ public interface BoardMapper {
 	//ajax controller
 	public List<BoardDTO> getBoardList(BoardVO boardVO);
 
-	public BoardDTO getBoardDetail(int projectCode);
+	public BoardDTO getBoardDetail(BoardVO boardVO);
 
 	public int insertBoardP(BoardVO boardVO);
 	

@@ -14,9 +14,9 @@
 	<!-- MariaDB -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="org.mariadb.jdbc.Driver"/>
-        <property name="url" value="jdbc:mariadb://10.112.58.186:3306/pms"></property>
-        <property name="username" value="pms"/>
-        <property name="password" value="pms123!@#"/>
+        <property name="url" value="jdbc:mariadb://127.0.0.1:3306/pms"></property>
+        <property name="username" value="root"/>
+        <property name="password" value="admin"/>
     </bean>
     
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

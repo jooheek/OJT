@@ -36,7 +36,7 @@ public interface BoardService {
 
 	public List<BoardDTO> getBoardList(BoardVO boardVO);
 	
-	public BoardDTO getBoardDetail(int projectCode);
+	public BoardDTO getBoardDetail(BoardVO boardVO);
 
 	public BoardDTO insertBoard(BoardVO boardVO);
 
