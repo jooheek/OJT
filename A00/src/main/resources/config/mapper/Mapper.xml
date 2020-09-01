@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.joohee.A00.Mapper.BoardMapper">
+	
+	<select id ="getList" resultType="org.joohee.A00.VO.BoardVO" parameterType="org.joohee.A00.VO.Criteria">
+		SELECT @ROWNUM:=@ROWNUM+1 AS R,P.*,F.*
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode,(SELECT @ROWNUM:=0)TEMP
+		WHERE 1=1
+		<include refid="search"></include>
+		LIMIT #{pageStart},#{perPageNum}
+		
+	</select>
+	<!-- ROWNUM 왜 안나오는지 확인  -->
+	
+	<select id="countBoardList" resultType="Integer" >
+		SELECT COUNT(*)
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+		WHERE 1=1
+		<include refid="search"></include>
+		
+	</select>
+	
+	<select id="read" resultType="org.joohee.A00.VO.BoardVO">
+		SELECT *
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+		WHERE P.projectCode =#{projectCode}
+	
+	
+	</select>
+	
+	<insert id="insertP" useGeneratedKeys="true" keyProperty="projectCode" parameterType="org.joohee.A00.VO.BoardVO">
+		INSERT INTO project(projectId,projectName,startDate,endDate,projectManager,projectContractor,projectArea,teamName)
+		VALUES(#{projectId},#{projectName},#{startDate},#{endDate},#{projectManager},#{projectContractor},#{projectArea},#{teamName})
+	
+	</insert>
+	
+	<insert id="insertF" parameterType="org.joohee.A00.VO.BoardVO">
+		INSERT INTO finance(projectCode,expense,outsourcingCost,netSales,sales,goods)
+		VALUES(#{projectCode},#{expense},#{outsourcingCost},#{netSales},#{sales},#{goods})
+	
+	</insert>
+	<!-- LAST_INSERT_ID()로 방금입력된 pk의 값을 가져옴-->
+	
+	<delete id="delete">
+		DELETE 
+		FROM project
+		WHERE projectCode=#{projectCode}
+
+	</delete>
+	
+	<update id="update" parameterType="org.joohee.A00.VO.BoardVO">
+		UPDATE project P INNER JOIN finance F
+			ON P.projectCODE = F.projectCode
+		SET P.projectId=#{projectId},P.projectName=#{projectName},P.startDate=#{startDate},P.endDate=#{endDate}
+		,P.projectManager=#{projectManager},P.projectContractor=#{projectContractor},P.projectArea=#{projectArea},P.teamName=#{teamName},
+		F.expense=#{expense},F.outsourcingCost=#{outsourcingCost},F.netSales=#{netSales},F.sales=#{sales},F.goods=#{goods}
+		WHERE P.projectCode=#{projectCode}
+
+	</update>
+	
+	<sql id="search">
+		<if test="searchType!=null">
+			<if test="searchType =='N'.toString()">AND projectName LIKE CONCAT('%', '${keyword}', '%') </if>
+		</if>
+	
+	
+	</sql>
+	<!--projectName 검색 -->
+	
+	
+	<!-- ajax controller -->
+	
+	
+	<select id="getBoardList" parameterType="org.joohee.A00.VO.BoardVO" resultType="org.joohee.A00.dto.BoardDTO">
+		SELECT *
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+		WHERE 1=1
+		ORDER BY p.projectCode asc
+	
+	</select>
+
+	<select id="getBoardDetail" parameterType="org.joohee.A00.VO.BoardVO" resultType="org.joohee.A00.dto.BoardDTO">
+		SELECT P.projectCode,P.projectId,P.projectName,P.startDate,P.endDate,P.projectManager,P.projectContractor,P.projectArea,P.teamName,
+				F.expense,F.outsourcingCost,F.netSales,F.sales,F.goods
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+		WHERE P.projectCode =#{projectCode}
+	
+	</select>
+	
+	<!-- insert -->
+	<insert id="insertBoardP" parameterType="org.joohee.A00.VO.BoardVO" useGeneratedKeys="true" keyProperty="projectCode">
+		INSERT INTO project(projectId,projectName,startDate,endDate,projectManager,projectContractor,projectArea,teamName)
+		VALUES(#{projectId},#{projectName},#{startDate},#{endDate},#{projectManager},#{projectContractor},#{projectArea},#{teamName})
+		
+	</insert>
+	<insert id="insertBoardF" parameterType="org.joohee.A00.VO.BoardVO">
+		INSERT INTO finance(projectCode,expense,outsourcingCost,netSales,sales,goods)
+		VALUES(#{projectCode},#{expense},#{outsourcingCost},#{netSales},#{sales},#{goods})
+		
+	</insert>
+	<!--  transactional query로 만들어야함 -->
+	
+	<delete id="deleteBoardP" parameterType="org.joohee.A00.VO.BoardVO" >
+		DELETE 
+		FROM project
+		WHERE projectCode=#{projectCode}
+	
+	</delete>
+	
+	<delete id ="deleteBoardF" parameterType="org.joohee.A00.VO.BoardVO">
+		DELETE 
+		FROM  finance
+		WHERE projectCode=#{projectCode}
+	
+	</delete>
+	
+	<!-- transactional query  on delete cascade 인데...-->
+	<!-- pagination -->	
+	<select id="getBoardCnt"  resultType="int">
+		SELECT COUNT(*)
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode
+	
+	</select>
+
+	
+	<update id="updateBoardP" parameterType="org.joohee.A00.VO.BoardVO"  useGeneratedKeys="true" keyProperty="projectCode">
+		UPDATE project
+		SET projectId=#{projectId},projectName=#{projectName},startDate=#{startDate},endDate=#{endDate}
+			<!-- projectManager=#{projectManager},projectContractor=#{projectContractor},projectArea=#{projectArea},teamName=#{teamName} -->
+		
+		WHERE projectCode =#{projectCode};
+	
+	</update>
+	
+	<update id="updateBoardF" parameterType="org.joohee.A00.VO.BoardVO">
+		UPDATE finance
+		SET expense=#{expense},outsourcingCost=#{outsourcingCost},netSales=#{netSales},
+				sales=#{sales},goods=#{goods}
+		
+		WHERE projectCode =#{projectCode};
+	
+	</update>
+	
+	<select id="getListWithPaging" resultType="org.joohee.A00.dto.BoardDTO" parameterType="org.joohee.A00.VO.Criteria">
+		SELECT @ROWNUM:=@ROWNUM+1 AS R,P.*,F.*
+		FROM project P LEFT JOIN finance F
+		ON P.projectCode=F.projectCode,(SELECT @ROWNUM:=0)TEMP
+		WHERE 1=1
+		LIMIT #{pageStart},#{perPageNum}
+	
+	</select>
+	
+</mapper>
