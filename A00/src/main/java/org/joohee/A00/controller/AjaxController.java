@@ -15,7 +15,10 @@ import org.joohee.A00.dto.BoardDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -33,7 +36,7 @@ public class AjaxController {
 
 	// 게시판 목록페이지 이동
 	@RequestMapping(value = "/boardList")
-	public String getBoardList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String getBoardList() throws Exception {
 		
 		return "boardList";
 	}
@@ -41,11 +44,10 @@ public class AjaxController {
 
 
 	// 게시판 목록 조회
-	@RequestMapping(value = "/getBoardList")
+	@RequestMapping(value = "/getBoardList",method = RequestMethod.POST)
 	@ResponseBody
-	public List<BoardDTO> getboardList(HttpServletRequest request, HttpServletResponse response, BoardVO boardVO)throws Exception {
-		
-		logger.info(boardVO.toString());
+	public List<BoardDTO> getboardList(BoardVO boardVO)throws Exception {
+		logger.info("==============getBoardListTest====================");
 		List<BoardDTO> boardDtoList = boardService.getBoardList(boardVO);
 		
 		return boardDtoList;
@@ -54,35 +56,41 @@ public class AjaxController {
 
 	// 게시판 상세페이지 이동
 	@RequestMapping(value = "/boardDetail")
-	public String boardDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String boardDetail() throws Exception {
 
 		return "boardDetail";
 	}
 
 	// 게시판 상세 조회
-	@RequestMapping(value = "/getBoardDetail")
+	@RequestMapping(value = "/getBoardDetail/{projectCode}",method = RequestMethod.POST)
 	@ResponseBody
-	public BoardDTO getBoardDetail(HttpServletRequest request, HttpServletResponse response, BoardVO boardVO)throws Exception {
-
-		BoardDTO boardDTO = boardService.getBoardDetail(boardVO);
+	public BoardDTO getBoardDetail(@PathVariable("projectCode")int projectCode,BoardVO boardVO)throws Exception {
+		
+		logger.info("============getBoardDetailTest====================");
+		 logger.info("projectCode : "+projectCode);
+		logger.info(boardVO.toString());
+		
+		BoardDTO boardDTO = boardService.getBoardDetail(projectCode);
 		
 		return boardDTO;
 	}
 
 	// 게시판 작성 페이지 이동
 	@RequestMapping(value = "/boardWrite")
-	public String boardWrite(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String boardWrite() throws Exception {
 
 		return "boardWrite";
 	}
 
 	
 	 //게시글 등록
-	 @RequestMapping(value="/insertBoard")
+	 @RequestMapping(value="/insertBoard",method = RequestMethod.POST)
 	 @ResponseBody 
-	 public BoardDTO insertBoard(HttpServletRequest request,HttpServletResponse response, BoardVO boardVO)throws Exception {
-	  
+	 public BoardDTO insertBoard(@RequestBody BoardVO boardVO)throws Exception {
+		 
+		 logger.info("=====================insertBoard=================================");
 		 logger.debug(boardVO.toString());
+		 
 		 BoardDTO boardDTO = boardService.insertBoard(boardVO);
 	  
 		 return boardDTO;
@@ -90,10 +98,10 @@ public class AjaxController {
 	 //requestbody boardvo 사용해서 데이터 넘길것
 	 
 	 //게시글 삭제
-	 @RequestMapping(value="/deleteBoard")
+	 @RequestMapping(value="/deleteBoard",method = RequestMethod.POST)
 	 @ResponseBody
-	 public BoardDTO deleteBoard(HttpServletRequest request, HttpServletResponse response,BoardVO boardVO)throws Exception{
-		 
+	 public BoardDTO deleteBoard(@PathVariable("projectCode")int projectCode, BoardVO boardVO) throws Exception{
+	
 		 BoardDTO boardDTO = boardService.deleteBoard(boardVO);
 		 
 		return boardDTO;
@@ -101,15 +109,15 @@ public class AjaxController {
 	 
 	 //게시판 수정 페이지로 이동
 	 @RequestMapping(value="/boardUpdate")
-	 public String boardUpdate(HttpServletRequest request, HttpServletResponse response)throws Exception{
+	 public String boardUpdate() throws Exception{
 
 		 return "boardUpdate";
 	 }
 	 
 	 //게시글 수정
-	 @RequestMapping(value="/updateBoard")
+	 @RequestMapping(value="/updateBoard",method = RequestMethod.POST)
 	 @ResponseBody
-	 public BoardDTO updateBoard(HttpServletRequest request, HttpServletResponse response,BoardVO boardVO)throws Exception{
+	 public BoardDTO updateBoard(@PathVariable("projectCode")int projectCode,BoardVO boardVO) throws Exception{
 		 
 		 logger.info("updateBoard");
 		 
@@ -117,8 +125,5 @@ public class AjaxController {
 		 
 		 return boardDTO;
 	 }
-	 
-	 
-	 
 	 
 }

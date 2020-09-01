@@ -99,11 +99,11 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시판 상세조회
 	@Override
-	public BoardDTO getBoardDetail(BoardVO boardVO) {
+	public BoardDTO getBoardDetail(int projectCode) {
 		
 		BoardDTO boardDTO = new BoardDTO();
 		
-		boardDTO = boardMapper.getBoardDetail(boardVO);
+		boardDTO = boardMapper.getBoardDetail(projectCode);
 		
 		return boardDTO;
 	}
@@ -118,7 +118,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		int insertCntP = boardMapper.insertBoardP(boardVO);
 		int insertCntF = boardMapper.insertBoardF(boardVO);
-
+		
 		if(insertCntP > 0 && insertCntF > 0) {
 			boardDTO.setResult("success");
 		}else {
@@ -130,13 +130,13 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시글 삭제
 	@Override
-	@Transactional
+	@Transactional 
 	public BoardDTO deleteBoard(BoardVO boardVO) {
 		
 		BoardDTO boardDTO = new BoardDTO();
-		
-		int deletCntP= boardMapper.deleteBoardP(boardVO);
 		int deletCntF = boardMapper.deleteBoardF(boardVO);
+		int deletCntP= boardMapper.deleteBoardP(boardVO);
+		
 		
 		if(deletCntP >0 && deletCntF >0) {
 			boardDTO.setResult("success");
@@ -153,8 +153,10 @@ public class BoardServiceImpl implements BoardService{
 		
 		BoardDTO boardDTO = new BoardDTO();
 		
+		
 		int updateCntP = boardMapper.updateBoardP(boardVO);
 		int updateCntF = boardMapper.updateBoardF(boardVO);
+		
 		
 		if(updateCntP >0  && updateCntF >0) {
 			boardDTO.setResult("success");

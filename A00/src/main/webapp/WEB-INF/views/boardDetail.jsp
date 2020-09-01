@@ -46,7 +46,7 @@
 		if(projectCode != ""){
 
 			$.ajax({
-				url		: "/board/getBoardDetail",
+				url		: "/board/getBoardDetail"+projectCode,
 				data	:$("#boardForm").serialize(),
 				dataType:"JSON",
 				cache	:false,

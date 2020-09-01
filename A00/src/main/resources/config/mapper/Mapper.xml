@@ -81,7 +81,7 @@
 		FROM project P LEFT JOIN finance F
 		ON P.projectCode=F.projectCode
 		WHERE 1=1
-		ORDER BY p.projectCode asc
+		ORDER BY P.projectCode asc
 	
 	</select>
 

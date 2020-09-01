@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+ <mapper namespace="com.joohee.A01.dao.TableDAO">
+	  
+	  <!-- 게시글  목록 조회 -->
+	  <select id="getBoardList" resultType="com.joohee.A01.vo.TableDTO" parameterType="com.joohee.A01.vo.TableDTO"> 
+	  	select * from tb_bbs where USE_YN = 'Y' order by CREAT_DATE DESC
+	
+	  </select>
+	  
+	  <!--게시글 상세조회 -->
+	  <select id="getBoardDetail" resultType="com.joohee.A01.vo.TableDTO" parameterType="com.joohee.A01.vo.TableDTO">
+	  	select * from tb_bbs where ntt_seq=#{ntt_seq} AND USE_YN='Y'
+	  
+	  </select>
+	  
+	  <!-- 게시글 비밀번호 확인후 상세조회 -->
+	  <select id="getBoardDetailChkPassword" resultType="com.joohee.A01.vo.TableDTO" parameterType="com.joohee.A01.vo.TableDTO">
+	  	select * from tb_bbs where ntt_seq=#{ntt_seq} and NTT_PASSWORD =#{NTT_PASSWORD}
+	  
+	  </select>
+	  
+	  <!-- 게시글  입력-->
+	  <insert id= "insertBoard" parameterType="com.joohee.A01.vo.TableDTO">
+	  	insert into tb_bbs(NTT_SJ,NTT_CN,NTCE_BGNDE,NTCR_ID,NTCR_NM,NTT_PASSWORD,USE_YN) 
+		values(#{NTT_SJ},#{NTT_CN},SYSDATE(),#{NTCR_ID},#{NTCR_NM},#{NTT_PASSWORD},'Y')
+	  
+	  </insert>
+	  
+	  
+	  <!-- 게시글  수정 -->
+	  <update id ="updateBoard" parameterType="com.joohee.A01.vo.TableDTO" >
+	  	UPDATE tb_bbs
+		SET NTT_SJ =#{NTT_SJ},
+			NTT_CN=#{NTT_CN}
+		WHERE NTT_SEQ=#{NTT_SEQ}
+		
+	  </update>
+	  <!-- 제목,내용만 수정 -->
+	  
+	  <!-- 게시글 삭제 -->
+	  <update id="deleteBoard" parameterType="int">
+	  	UPDATE tb_bbs
+		SET NTCE_ENDDE = SYSDATE(),USE_YN='N' 
+		WHERE ntt_seq=#{ntt_seq}
+	  
+	  </update>
+	  
+	  <!-- 게시글 조회수 -->
+	  <update id="readCount" parameterType="com.joohee.A01.vo.TableDTO">
+	  	UPDATE tb_bbs
+		SET NTT_RDCNT = NTT_RDCNT+1
+		WHERE ntt_seq=#{ntt_seq}
+		
+	  </update>
+	  
+	  
+	  <!-- 전체 게시글의 갯수 -->
+	  <select id="getBoardCount" parameterType="com.joohee.A01.vo.TableDTO" resultType="int">
+	  	select COUNT(*) from tb_bbs where NTCE_ENDDE IS NULL order by ntt_seq
+	  
+	  </select>
+	  
+	  <!-- 댓글 작성 -->
+	  <insert id="insertComment" parameterType="com.joohee.A01.vo.CommentDTO">
+	  	insert into 
+	  
+	  </insert>
+	  
+	  <!-- 댓글 조회 -->
+	  <select id="getComment" parameterType="com.joohee.A01.vo.CommentDTO">
+	  	select 
+	  
+	  </select>
+	  
+ </mapper>

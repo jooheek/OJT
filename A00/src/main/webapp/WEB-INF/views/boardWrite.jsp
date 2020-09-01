@@ -38,6 +38,21 @@
 
 	//작성페이지
 	function insertBoard(){
+
+ 		var jsonData = new Object();
+		jsonData.projectId = $('#projectId').val();
+		jsonData.projectName =  $('#projectName').val();
+		jsonData.projectManager = $('#projectManager').val();
+		jsonData.projectContractor = $('#projectContractor').val();
+		jsonData.projectArea =  $('#projectArea option:selected').val();
+		jsonData.teamName = $('#teamName').val();
+		jsonData.startDate = $('#startDate').val();
+		jsonData.endDate = $('#endDate').val();
+		jsonData.expense = $('#expense').val();
+		jsonData.netSales = $('#netSales').val();
+		jsonData.sales = $('#sales').val();
+		jsonData.goods = $('#goods').val(); 
+
 		var projectId = $('#projectId').val();
 		var projectName = $('#projectName').val();
 		var projectManager = $('#projectManager').val();
@@ -52,8 +67,8 @@
 		var sales = $('#sales').val();
 		var goods = $('#goods').val();
 
-		
-	/* 	if(projectId == ""){
+
+		/*if(projectId == ""){
 			alert("프로젝트 아이디를 입력해주세요");
 			$("#projectId").focus();
 			return;
@@ -78,14 +93,17 @@
 		} */
 
 		
+
+		
+		
 		var yn = confirm("프로젝트를 등록하시겠습니까?");
 
 		if(yn){
 			$.ajax({
 				url		:"/board/insertBoard",
-				data	:$("#insertForm").serialize(),
-				//contentType: 'application/json',
-				dataType:"JSON",
+				data	:JSON.stringify(jsonData),
+				contentType: 'application/json;charset=UTF-8',
+				//dataType:"JSON",
 				cache	:false,
 				async	:true,
 				type	:"POST",
@@ -105,7 +123,7 @@
 
 		if(obj != null){
 			var result = obj.result;
-
+			console.log();
 			if(result=="success"){
 				alert("프로젝트가 등록되었습니다.");
 				goBoardList();
@@ -127,7 +145,7 @@
 <body>
 
 	<div class="col-md-12">
-	    	<form id="insertForm" name="insertForm">
+		<form>
 				<table class="table" width="80%">
 					<thead>
 						<tr>
@@ -148,16 +166,16 @@
 					</thead>
 					<tbody>
 	    				<tr>
-							<td id="projectId">
+							<td>
 							    <input type="text" name='projectId' id='projectId' value=""/>
 							</td>
-							<td id="projectName">
+							<td>
 							    <input type="text" name='projectName' id='projectName' value=""/>
 							</td>
-						    <td id="projectManager">
+						    <td>
 							   <input type="text" name='projectManager' id='projectManager' value=""/>
 							</td>
-							<td id="projectContractor">
+							<td>
 							   <input type="text" name='projectContractor' id='projectContractor' value=""/>
 							</td>
 							<td>
@@ -168,36 +186,36 @@
 						        <option value="통신">통신</option>
 							   </select>
 							</td>
-							<td id="teamName">
+							<td>
 							    <input type="text" name='teamName' id='teamName' value=""/>
 							</td>
-							<td id="startDate">
+							<td>
 							   <input type='date' name='startDate' id='startDate' value=""/>
 							</td>
-							<td id="endDate">
+							<td>
 							   <input type="date"  name='endDate' id='endDate' value=""/>
 							</td>
-							<td id="expense">
-							   <input type="text" name='expense' id='expense' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							<td>
+							   <input type="text" name='expense' id='expense' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="0"/>
 							</td>
-							<td id="outsourcingCost">
-							   <input type="text" name='outsourcingCost' id='outsourcingCost' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							<td>
+							   <input type="text" name='outsourcingCost' id='outsourcingCost' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="0"/>
 							</td>
-							<td id="netSales">
-							   <input type="text" name='netSales' id='netSales'oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							<td>
+							   <input type="text" name='netSales' id='netSales'oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="0"/>
 							</td>
-							<td id="sales">
-							  <input type="text" name='sales' id='sales'oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							<td>
+							  <input type="text" name='sales' id='sales'oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="0"/>
 							</td>
-							<td id="goods">
-							   <input type="text" name='goods' id='goods' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value=""/>
+							<td>
+							   <input type="text" name='goods' id='goods' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="0"/>
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				</form>
 				<button type="button" onclick = "javascript:goBoardList();" class="btn btn-secondary btn-sm" >목록으로</button>
 				<button type="button" onclick = "javascript:insertBoard();" class="btn btn-primary btn-sm">등록하기</button>
-				</form>
 				</div>
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
